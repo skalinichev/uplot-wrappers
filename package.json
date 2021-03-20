@@ -10,7 +10,8 @@
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "uplot": "^1.6.7"
+    "uplot": "^1.6.7",
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",

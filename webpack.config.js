@@ -9,15 +9,16 @@ const babelOptions = {
 module.exports = env => ({
         mode: env.mode ? env.mode : 'development',
         devtool: env.mode === 'production' ? 'source-map' : false,
-	cache: true,
+	cache: false,
         optimization: {
 		minimize: env.mode === 'production'
 	},
 	entry: {
-		main: ['./src/index.tsx']
+		'uplot-react': ['./src/uplot-react.tsx'],
+                'uplot-vue': ['./src/uplot-vue.tsx'],
 	},
 	output: {
-		filename: `uplot-react.${env.libraryTarget.split('js')[0]}${env.mode === 'production' ? '.min' : ''}.js`,
+		filename: `[name].${env.libraryTarget.split('js')[0]}${env.mode === 'production' ? '.min' : ''}.js`,
                 libraryTarget: env.libraryTarget
 	},
 	module: {
@@ -32,16 +33,6 @@ module.exports = env => ({
                                         },
                                         {
                                                 loader: 'ts-loader'
-                                        }
-                                ]
-                        },
-                        {
-                                test: /\.jsx?$/,
-                                exclude: /node_modules/,
-                                use: [
-                                        {
-                                                loader: 'babel-loader',
-                                                options: babelOptions
                                         }
                                 ]
                         }
@@ -62,6 +53,7 @@ module.exports = env => ({
 			commonjs2: 'react-dom',
 			root: 'ReactDOM'
 		},
-                uplot: 'uplot'
-	},
+                uplot: 'uplot',
+                vue: 'vue'
+	}
 });

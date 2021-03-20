@@ -2,11 +2,11 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"outDir": "./dist/",
-		"module": "esnext",
+		"module": "es2015",
 		"target": "es5",
 		"esModuleInterop": true,
 		"lib": [
-			"es2017",
+			"es2015",
 			"dom",
 			"scripthost"
 		],
@@ -24,7 +24,6 @@
 		"noUnusedParameters": false,
 		"strictNullChecks": true,
 		"suppressImplicitAnyIndexErrors": true,
-		"experimentalDecorators": true,
 		"skipLibCheck": true
 	}
 }
