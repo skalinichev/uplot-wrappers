@@ -6,15 +6,19 @@ const babelOptions = {
 	presets: ['@babel/preset-react']
 };
 
-module.exports = {
-        mode: 'development',
-        devtool: false,
+module.exports = env => ({
+        mode: env.mode ? env.mode : 'development',
+        devtool: env.mode === 'production' ? 'source-map' : false,
 	cache: true,
+        optimization: {
+		minimize: env.mode === 'production'
+	},
 	entry: {
 		main: ['./src/index.tsx']
 	},
 	output: {
-		filename: '[name].js',
+		filename: `uplot-react.${env.libraryTarget.split('js')[0]}${env.mode === 'production' ? '.min' : ''}.js`,
+                libraryTarget: env.libraryTarget
 	},
 	module: {
 		rules: [
@@ -59,4 +63,4 @@ module.exports = {
 			root: 'ReactDOM'
 		}
 	},
-};
+});
