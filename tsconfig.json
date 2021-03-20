@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"outDir": "./dist/",
+		"module": "esnext",
+		"target": "es5",
+		"esModuleInterop": true,
+		"lib": [
+			"es2017",
+			"dom",
+			"scripthost"
+		],
+		"sourceMap": true,
+		"allowJs": true,
+		"downlevelIteration": true,
+		"jsx": "react",
+		"moduleResolution": "node",
+		"rootDir": ".",
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": false,
+		"strictNullChecks": true,
+		"suppressImplicitAnyIndexErrors": true,
+		"experimentalDecorators": true,
+		"skipLibCheck": true
+	}
+}
