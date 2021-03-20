@@ -78,11 +78,11 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
         }
 
         return () => {
-          prevProps.options = options;
-          prevProps.data = data;
-          prevProps.target = target;
+            prevProps.options = options;
+            prevProps.data = data;
+            prevProps.target = target;
         };
-      }, [options, data, target]
+    }, [options, data, target]
     );
     return null;
 }
