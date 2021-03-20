@@ -61,6 +61,7 @@ module.exports = env => ({
 			commonjs: 'react-dom',
 			commonjs2: 'react-dom',
 			root: 'ReactDOM'
-		}
+		},
+                uplot: 'uplot'
 	},
 });
