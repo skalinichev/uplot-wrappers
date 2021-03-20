@@ -1,6 +1,33 @@
 {
     "name": "uplot-wrappers",
     "version": "1.0.0",
+    "description": "React and Vue.js wrappers for uPlot",
+    "author": "Sergey Kalinichev <kalinichev.so.0@gmail.com>",
+    "license": "MIT",
+    "homepage": "https://github.com/user/project",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/user/project.git"
+    },
+    "bugs": {
+        "url": "https://github.com/user/project/issues"
+    },
+    "engines": {
+        "node": ">=8"
+    },
+    "keywords": [
+        "Charts",
+        "uPlot",
+        "React",
+        "Vue",
+        "Wrapper"
+    ],
+    "files": [
+        "dist/*js",
+        "dist/*js.map",
+        "types/*.d.ts"
+    ],
+    "types": "types/index.d.ts",
     "scripts": {
         "build": "concurrently 'npm run buildUMD' 'npm run buildCommonJS' 'npm run buildProd'",
         "buildUMD": "webpack --env=libraryTarget=umd",
