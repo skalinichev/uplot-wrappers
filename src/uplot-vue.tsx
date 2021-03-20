@@ -1,36 +1,21 @@
-import Vue, {PropType} from 'vue';
+import Vue, {PropType, VNode} from 'vue';
 
 import uPlot from 'uplot';
 
 import {optionsUpdateState, dataMatch} from './common';
 
 export default Vue.extend<
-    {_chart: uPlot | null}, {_destroy: () => void, _create: () => void}, {}, {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement}
+    {_chart: uPlot | null}, {_destroy: () => void, _create: () => void}, Record<string, never>, {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement}
 >({
-    render() {
-        return null as any;
-    },
     name: 'uPlotVue',
-    methods: {
-        _destroy() {
-            if (this._chart) {
-                this.$emit('delete', this._chart);
-                this._chart.destroy();
-                this._chart = null;
-            }
-        },
-        _create() {
-            this._chart = new uPlot(this.$props.options, this.$props.data, this.$props.target);
-            this.$emit('create', this._chart);
-        }
-    },
     props: {
-        options: {type: Object as PropType<uPlot.Options>},
-        data: {type: Array as unknown as PropType<uPlot.AlignedData>},
-        target: {type: HTMLElement}
+        options: {type: Object as PropType<uPlot.Options>, required: true},
+        data: {type: Array as unknown as PropType<uPlot.AlignedData>, required: true},
+        target: {type: HTMLElement, required: true}
     },
-    mounted() {
-        this._create();
+    data(): {_chart: uPlot | null} {
+        // eslint-disable-next-line
+        return {_chart: null};
     },
     watch: {
         options(prevOptions: uPlot.Options, options: uPlot.Options) {
@@ -54,11 +39,26 @@ export default Vue.extend<
             }
         }
     },
-    data(): {_chart: uPlot | null} {
-        // eslint-disable-next-line
-        return {_chart: null};
+    mounted() {
+        this._create();
     },
     beforeDestroy() {
         this._destroy();
+    },
+    methods: {
+        _destroy() {
+            if (this._chart) {
+                this.$emit('delete', this._chart);
+                this._chart.destroy();
+                this._chart = null;
+            }
+        },
+        _create() {
+            this._chart = new uPlot(this.$props.options, this.$props.data, this.$props.target);
+            this.$emit('create', this._chart);
+        }
+    },
+    render() {
+        return null as unknown as VNode;
     }
 });

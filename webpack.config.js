@@ -1,5 +1,7 @@
 'use strict';
 
+const ESLintPlugin = require('eslint-webpack-plugin');
+
 module.exports = env => ({
     mode: env.mode ? env.mode : 'development',
     devtool: env.mode === 'production' ? 'source-map' : false,
@@ -28,9 +30,9 @@ module.exports = env => ({
                     loader: 'ts-loader'
                 }
             ]
-        }
-        ]
+        }]
     },
+    plugins: [new ESLintPlugin({extensions: ['ts', 'tsx']})],
     resolve: {
         extensions: ['.ts', '.tsx']
     },

@@ -2,7 +2,7 @@ import uPlot from 'uplot';
 
 type OptionsUpdateState = 'keep' | 'update' | 'create';
 
-const stringify = (obj: Object) =>
+const stringify = (obj: Record<string, unknown>) =>
     JSON.stringify(obj, (key, value) =>
         typeof value === 'function' ? value.toString() : value
     )
@@ -24,7 +24,7 @@ export const optionsUpdateState = (lhs: uPlot.Options, rhs: uPlot.Options): Opti
     return state;
 }
 
-export const dataMatch = (lhs: uPlot.AlignedData, rhs: uPlot.AlignedData) => {
+export const dataMatch = (lhs: uPlot.AlignedData, rhs: uPlot.AlignedData): boolean => {
     if (lhs.length !== rhs.length) {
         return false;
     }

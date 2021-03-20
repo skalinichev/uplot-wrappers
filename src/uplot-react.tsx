@@ -4,13 +4,13 @@ import uPlot from 'uplot';
 
 import {optionsUpdateState, dataMatch} from './common';
 
-export default function UplotReact({options, data, target, onDelete = () => {}, onCreate = () => {}}: {
+export default function UplotReact({options, data, target, onDelete = () => {}, onCreate = () => {}}:  {
     options: uPlot.Options,
     data: uPlot.AlignedData,
     target: HTMLElement,
     onDelete?: (chart: uPlot) => void
     onCreate?: (chart: uPlot) => void
-}) {
+}): React.ReactNode {
     const [chart, setChart] = useState<uPlot | null>(null);
 
     function destroy(chart: uPlot | null) {
