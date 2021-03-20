@@ -2,6 +2,8 @@ import {useEffect, useRef, useState} from 'react';
 
 import uPlot from 'uplot';
 
+import {optionsUpdateState, dataMatch} from './common';
+
 export default function UplotReact({options, data, target, onDelete = () => {}, onCreate = () => {}}: {
     options: uPlot.Options,
     data: uPlot.AlignedData,
@@ -34,42 +36,19 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
     const prevProps = useRef({options, data, target}).current;
     useEffect(() => {
         if (prevProps.options !== options) {
-            const oldOptions = prevProps.options;
-            const newOptions = options;
-            const canUpdate = Object.keys(oldOptions).every(k => {
-                if (k === 'height' || k === 'width') {
-                    return true;
-                }
-                const stringify = (obj: any) =>
-                    JSON.stringify(obj, (key, value) =>
-                        typeof value === 'function' ? value.toString() : value
-                    )
-
-                return stringify(oldOptions[k]) === stringify(newOptions[k]);
-            });
-            if (canUpdate && chart) {
-                if (oldOptions.height !== newOptions.height || oldOptions.width !== newOptions.width) {
-                    chart.setSize({width: newOptions.width, height: newOptions.height});
-                }
-            } else {
+            const optionsState = optionsUpdateState(prevProps.options, options);
+            if (!chart || optionsState === 'create') {
                 destroy(chart);
                 create();
+            } else if (optionsState === 'update') {
+                chart.setSize({width: options.width, height: options.height});
             }
         }
         if (prevProps.data !== data) {
-            const newData = data;
-            const oldData = prevProps.data;
-
-            const dataMatch = (lhs: (number | null)[], rhs: (number | null)[]) => {
-                if (lhs.length !== rhs.length) {
-                    return false;
-                }
-                return lhs.every((value, idx) => value === rhs[idx]);
-            }
             if (!chart) {
                 create();
-            } else if (oldData.length !== newData.length || !oldData.every((d, idx) => dataMatch(d, newData[idx]))) {
-                chart.setData(newData);
+            } else if (!dataMatch(prevProps.data, data)) {
+                chart.setData(data);
             }
         }
         if (prevProps.target !== target) {
@@ -82,7 +61,7 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
             prevProps.data = data;
             prevProps.target = target;
         };
-    }, [options, data, target]
-    );
+    }, [options, data, target]);
+
     return null;
 }

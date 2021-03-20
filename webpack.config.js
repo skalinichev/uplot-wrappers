@@ -31,6 +31,9 @@ module.exports = env => ({
         }
         ]
     },
+    resolve: {
+        extensions: ['.ts', '.tsx']
+    },
     externals: {
         react: {
             amd: 'react',
