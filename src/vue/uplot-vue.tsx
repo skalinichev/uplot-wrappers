@@ -2,16 +2,21 @@ import Vue, {PropType, VNode} from 'vue';
 
 import uPlot from 'uplot';
 
-import {optionsUpdateState, dataMatch} from './common';
+import {optionsUpdateState, dataMatch} from '../common';
 
 export default Vue.extend<
-    {_chart: uPlot | null}, {_destroy: () => void, _create: () => void}, Record<string, never>, {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement}
+    {_chart: uPlot | null}, {_destroy: () => void, _create: () => void}, Record<string, never>, {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement | null}
 >({
-    name: 'uPlotVue',
+    name: 'UPlotVue',
     props: {
         options: {type: Object as PropType<uPlot.Options>, required: true},
         data: {type: Array as unknown as PropType<uPlot.AlignedData>, required: true},
-        target: {type: HTMLElement, required: true}
+        target: {
+            validator(target) {
+                return target === null || target instanceof HTMLElement
+            },
+            required: true
+        }
     },
     data(): {_chart: uPlot | null} {
         // eslint-disable-next-line

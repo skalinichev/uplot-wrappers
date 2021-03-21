@@ -7,7 +7,6 @@
         "esModuleInterop": true,
         "sourceMap": true,
         "downlevelIteration": true,
-        "jsx": "react",
         "moduleResolution": "node",
         "rootDir": ".",
         "forceConsistentCasingInFileNames": true,
@@ -19,6 +18,5 @@
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
         "skipLibCheck": true
-    },
-    "exclude": ["./src/types/**", "./src/*vue*"]
+    }
 }

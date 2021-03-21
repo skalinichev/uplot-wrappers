@@ -27,7 +27,6 @@
         "dist/*js.map",
         "types/*.d.ts"
     ],
-    "types": "types/index.d.ts",
     "scripts": {
         "build": "concurrently 'npm run buildUMD' 'npm run buildCommonJS' 'npm run buildProd'",
         "buildUMD": "webpack --env=libraryTarget=umd",
@@ -35,8 +34,6 @@
         "buildProd": "webpack --env=libraryTarget=umd --env=mode=production"
     },
     "dependencies": {
-        "@vue/babel-preset-jsx": "^1.2.4",
-        "eslint-plugin-vue": "^7.7.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "uplot": "^1.6.7",
@@ -50,10 +47,13 @@
         "@types/react-dom": "^17.0.2",
         "@typescript-eslint/eslint-plugin": "^4.18.0",
         "@typescript-eslint/parser": "^4.18.0",
+        "@vue/babel-preset-jsx": "^1.2.4",
         "babel-loader": "^8.2.2",
         "concurrently": "^6.0.0",
+        "copy-webpack-plugin": "4",
         "eslint": "^7.22.0",
         "eslint-plugin-react": "^7.22.0",
+        "eslint-plugin-vue": "^7.7.0",
         "eslint-webpack-plugin": "^2.5.2",
         "ts-loader": "^8.0.18",
         "typescript": "^4.2.3",

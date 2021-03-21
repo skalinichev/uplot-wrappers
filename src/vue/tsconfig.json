@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "jsx": "preserve",
+        "jsxFactory": "VueTsxSupport",
+        "typeRoots": ["node_modules/@types", "./src/vue/types"],
+
+        "esModuleInterop": true,
+        "noImplicitThis": true
+    },
+    "exclude": ["./src/react/**"]
+}

@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 
 import uPlot from 'uplot';
 
-import {optionsUpdateState, dataMatch} from './common';
+import {optionsUpdateState, dataMatch} from '../common';
 
 export default function UplotReact({options, data, target, onDelete = () => {}, onCreate = () => {}}: {
     options: uPlot.Options,
