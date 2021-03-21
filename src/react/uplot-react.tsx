@@ -7,7 +7,8 @@ import {optionsUpdateState, dataMatch} from '../common';
 export default function UplotReact({options, data, target, onDelete = () => {}, onCreate = () => {}}: {
     options: uPlot.Options,
     data: uPlot.AlignedData,
-    target: HTMLElement,
+    // eslint-disable-next-line
+    target?: HTMLElement | ((self: uPlot, init: Function) => void),
     onDelete?: (chart: uPlot) => void
     onCreate?: (chart: uPlot) => void
 }): JSX.Element | null {

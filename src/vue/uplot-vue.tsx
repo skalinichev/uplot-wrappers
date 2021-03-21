@@ -5,7 +5,11 @@ import uPlot from 'uplot';
 import {optionsUpdateState, dataMatch} from '../common';
 
 export default Vue.extend<
-    {_chart: uPlot | null}, {_destroy: () => void, _create: () => void}, Record<string, never>, {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement | null}
+    {_chart: uPlot | null},
+    {_destroy: () => void, _create: () => void},
+    Record<string, never>,
+    // eslint-disable-next-line
+    {options: uPlot.Options, data: uPlot.AlignedData, target?: HTMLElement | ((self: uPlot, init: Function) => void)}
 >({
     name: 'UPlotVue',
     props: {
@@ -13,9 +17,10 @@ export default Vue.extend<
         data: {type: Array as unknown as PropType<uPlot.AlignedData>, required: true},
         target: {
             validator(target) {
-                return target === null || target instanceof HTMLElement
+                return target == null || target instanceof HTMLElement || typeof target === 'function';
             },
-            required: true
+            default: undefined,
+            required: false
         }
     },
     data(): {_chart: uPlot | null} {
