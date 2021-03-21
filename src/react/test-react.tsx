@@ -50,7 +50,7 @@ class ClassApp extends React.Component<
 
 const HooksApp = () => {
     const [options, setOptions] = useState<uPlot.Options>(
-        {width: 400, height: 300, series: [{
+        {title: 'Chart', width: 400, height: 300, series: [{
             label: 'Date'
         }, {
             label: '',

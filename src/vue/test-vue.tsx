@@ -14,7 +14,7 @@ const App = Vue.extend<
     data() {
         return {
             options: {
-                width: 400, height: 300,
+                title: 'Chart', width: 400, height: 300,
                 series: [{
                     label: 'Date'
                 }, {

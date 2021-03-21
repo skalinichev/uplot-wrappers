@@ -7,15 +7,18 @@ const stringify = (obj: Record<string, unknown>) =>
         typeof value === 'function' ? value.toString() : value
     )
 
-export const optionsUpdateState = (lhs: uPlot.Options, rhs: uPlot.Options): OptionsUpdateState => {
-    let state: OptionsUpdateState = 'keep';
-    for (const k of Object.keys(lhs)) {
-        if (k === 'height' || k === 'width') {
-            if (lhs[k] !== rhs[k]) {
-                state = 'update';
-            }
-        }
+export const optionsUpdateState = (_lhs: uPlot.Options, _rhs: uPlot.Options): OptionsUpdateState => {
+    const {width: lhsWidth, height: lhsHeight, ...lhs} = _lhs;
+    const {width: rhsWidth, height: rhsHeight, ...rhs} = _rhs;
 
+    let state: OptionsUpdateState = 'keep';
+    if (lhsHeight !== rhsHeight || lhsWidth !== rhsWidth) {
+        state = 'update';
+    }
+    if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+        return 'create';
+    }
+    for (const k of Object.keys(lhs)) {
         if (stringify(lhs[k]) !== stringify(rhs[k])) {
             state = 'create';
             break;
