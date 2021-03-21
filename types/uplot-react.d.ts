@@ -7,4 +7,4 @@ export default function UplotReact({ options, data, target, onDelete, onCreate }
     target: HTMLElement;
     onDelete?: (chart: uPlot) => void;
     onCreate?: (chart: uPlot) => void;
-}): React.ReactNode;
+}): JSX.Element | null;
