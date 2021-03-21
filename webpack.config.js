@@ -11,7 +11,9 @@ module.exports = env => ({
     },
     entry: {
         'uplot-react': ['./src/uplot-react.tsx'],
-        'uplot-vue': ['./src/uplot-vue.tsx'],
+-       'uplot-vue': ['./src/uplot-vue.tsx'],
+        'test-react': ['./src/test-react.tsx'],
+        'test-vue': ['./src/test-vue.tsx'],
     },
     output: {
         filename: `[name].${env.libraryTarget.split('js')[0]}${env.mode === 'production' ? '.min' : ''}.js`,
@@ -49,7 +51,17 @@ module.exports = env => ({
             commonjs2: 'react-dom',
             root: 'ReactDOM'
         },
-        uplot: 'uplot',
-        vue: 'vue'
+        uplot: {
+            amd: 'uplot',
+            commonjs: 'uplot',
+            commonjs2: 'uplot',
+            root: 'uPlot'
+        },
+        vue: {
+            amd: 'vue',
+            commonjs: 'vue',
+            commonjs2: 'vue',
+            root: 'Vue'
+        },
     }
 });

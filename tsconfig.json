@@ -19,5 +19,6 @@
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
         "skipLibCheck": true
-    }
+    },
+    "exclude": ["./src/types/**", "./src/*vue*"]
 }
