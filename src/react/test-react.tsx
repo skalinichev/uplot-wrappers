@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import ReactDOM, {unstable_batchedUpdates} from 'react-dom';
 
 import uPlot from 'uplot';
-import UPlotReact from './uplot-react';
+import UPlotReact from './react';
 
 const root: HTMLElement = document.querySelector('#root')!;
 

@@ -7,25 +7,25 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = env => {
     const entry = {
-        'uplot-react': ['./src/react/uplot-react.tsx'],
-        'uplot-vue': ['./src/vue/uplot-vue.tsx']
+        'react': ['./src/react/react.tsx'],
+        'vue': ['./src/vue/vue.tsx']
     }
-    if (env.libraryTarget === 'umd') {
+    if (env.mode !== 'production') {
         entry['test-react'] = ['./src/react/test-react.tsx'];
         entry['test-vue'] = ['./src/vue/test-vue.tsx'];
     }
 
     return ({
         mode: env.mode ? env.mode : 'development',
-        devtool: env.mode === 'production' ? 'source-map' : false,
+        devtool: 'source-map',
         cache: false,
         optimization: {
             minimize: env.mode === 'production'
         },
         entry,
         output: {
-            filename: `[name].${env.libraryTarget.split('js')[0]}${env.mode === 'production' ? '.min' : ''}.js`,
-            libraryTarget: env.libraryTarget
+            filename: `[name]${env.mode === 'production' ? '.min' : ''}.js`,
+            libraryTarget: 'umd'
         },
         module: {
             rules: [{
@@ -59,11 +59,15 @@ module.exports = env => {
         plugins: [
             new ESLintPlugin({extensions: ['ts', 'tsx']}),
             new CopyPlugin([
-                {from: "src/**/*html", force: true, flatten: true}
+                {from: "src/**/*html", force: true, flatten: true},
+                {from: "types/**", force: true, flatten: true},
+                {from: "package.json", force: true, flatten: true},
+                {from: "node_modules/uplot/dist/uPlot.iife.min.js", force: true, flatten: true},
+                {from: "node_modules/uplot/dist/uPlot.min.css", force: true, flatten: true}
             ])
         ],
         resolve: {
-            extensions: ['.ts', '.tsx']
+            extensions: ['.ts', '.tsx', '.js']
         },
         externals: {
             react: {

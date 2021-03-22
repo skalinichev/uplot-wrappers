@@ -2,7 +2,7 @@ import Vue, {VNode, CreateElement} from 'vue';
 
 import uPlot from 'uplot';
 
-import UPlotVue from './uplot-vue';
+import UPlotVue from './vue';
 
 const App = Vue.extend<
     {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement},
