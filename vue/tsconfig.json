@@ -3,10 +3,10 @@
     "compilerOptions": {
         "jsx": "preserve",
         "jsxFactory": "VueTsxSupport",
-        "typeRoots": ["node_modules/@types", "./src/vue/types"],
+        "typeRoots": ["node_modules/@types", "./dev-types"],
 
         "esModuleInterop": true,
         "noImplicitThis": true
     },
-    "exclude": ["./src/react/**"]
+    "exclude": ["./react/**"]
 }

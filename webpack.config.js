@@ -6,13 +6,10 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = env => {
+    const {framework} = env;
     const entry = {
-        'react': ['./src/react/react.tsx'],
-        'vue': ['./src/vue/vue.tsx']
-    }
-    if (env.mode !== 'production') {
-        entry['test-react'] = ['./src/react/test-react.tsx'];
-        entry['test-vue'] = ['./src/vue/test-vue.tsx'];
+        [`uplot-${framework}`]: `./${framework}/uplot-${framework}`,
+        [`uplot-${framework}-example`]: `./${framework}/uplot-${framework}-example`
     }
 
     return ({
@@ -25,12 +22,13 @@ module.exports = env => {
         entry,
         output: {
             filename: `[name]${env.mode === 'production' ? '.min' : ''}.js`,
-            libraryTarget: 'umd'
+            libraryTarget: 'umd',
+            path: path.join(__dirname, framework, 'dist')
         },
         module: {
             rules: [{
                 test: /\.tsx?$/,
-                exclude: [/node_modules/, path.join(__dirname, 'src', 'vue')],
+                exclude: [/node_modules/, path.join(__dirname, 'vue')],
                 use: [
                     {
                         loader: 'babel-loader',
@@ -38,12 +36,12 @@ module.exports = env => {
                     },
                     {
                         loader: 'ts-loader',
-                        options: {configFile: path.join(__dirname, 'src', 'react', 'tsconfig.json'), context: __dirname}
+                        options: {configFile: path.join(__dirname, 'react', 'tsconfig.json'), context: __dirname}
                     }
                 ]
             }, {
                 test: /\.tsx/,
-                exclude: [/node_modules/, path.join(__dirname, 'src', 'react')],
+                exclude: [/node_modules/, path.join(__dirname, 'react')],
                 use: [
                     {
                         loader: 'babel-loader',
@@ -51,7 +49,7 @@ module.exports = env => {
                     },
                     {
                         loader: 'ts-loader',
-                        options: {configFile: path.join(__dirname, 'src', 'vue', 'tsconfig.json'), context: __dirname}
+                        options: {configFile: path.join(__dirname, 'vue', 'tsconfig.json'), context: __dirname}
                     }
                 ]
             },]
@@ -59,9 +57,9 @@ module.exports = env => {
         plugins: [
             new ESLintPlugin({extensions: ['ts', 'tsx']}),
             new CopyPlugin([
-                {from: "src/**/*html", force: true, flatten: true},
-                {from: "types/**", force: true, flatten: true},
-                {from: "package.json", force: true, flatten: true},
+                {from: `${framework}/**/*html`, force: true, flatten: true},
+                {from: `${framework}/types/**`, force: true, flatten: true},
+                {from: `${framework}/package.json`, force: true, flatten: true},
                 {from: "node_modules/uplot/dist/uPlot.iife.min.js", force: true, flatten: true},
                 {from: "node_modules/uplot/dist/uPlot.min.css", force: true, flatten: true}
             ])

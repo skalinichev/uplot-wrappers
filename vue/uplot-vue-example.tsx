@@ -2,15 +2,15 @@ import Vue, {VNode, CreateElement} from 'vue';
 
 import uPlot from 'uplot';
 
-import UPlotVue from './vue';
+import UplotVue from './uplot-vue';
 
 const App = Vue.extend<
     {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement},
-    {onCreateFromTemplate: () => void, onDeleteFromTemplate: () => void},
+    {onCreateFromTemplate: (chart: uPlot) => void, onDeleteFromTemplate: (chart: uPlot) => void},
     Record<string, never>, Record<string, never>
 >({
-    name: 'UPlotVueTest',
-    components: {uplotvue: UPlotVue},
+    name: 'UplotVueExample',
+    components: {uplotvue: UplotVue},
     data() {
         return {
             options: {
@@ -45,23 +45,23 @@ const App = Vue.extend<
         }, 2000);
     },
     methods: {
-        onCreateFromTemplate() {
+        onCreateFromTemplate(/* chart: uPlot */) {
             console.log('Created from template');
         },
-        onDeleteFromTemplate() {
+        onDeleteFromTemplate(/* chart: uPlot */) {
             console.log('Deleted from template');
         }
     },
     // eslint-disable-next-line
     render(h: CreateElement): VNode {
         return (<div ref='root'>
-            <UPlotVue
+            <UplotVue
                 // @ts-ignore
                 options={this.options}
                 data={this.data}
                 target={this.target}
-                onDelete={() => console.log('Deleted from render function')}
-                onCreate={() => console.log('Created from render function')}
+                onDelete={(/* chart: uPlot */) => console.log('Deleted from render function')}
+                onCreate={(/* chart: uPlot */) => console.log('Created from render function')}
             />
         </div>);
     }

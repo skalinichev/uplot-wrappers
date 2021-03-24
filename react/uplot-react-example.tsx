@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import ReactDOM, {unstable_batchedUpdates} from 'react-dom';
 
 import uPlot from 'uplot';
-import UPlotReact from './react';
+
+import UPlotReact from './uplot-react';
 
 const root: HTMLElement = document.querySelector('#root')!;
 
@@ -42,8 +43,8 @@ class ClassApp extends React.Component<
             options={this.state.options}
             data={this.state.data}
             target={root}
-            onDelete={() => console.log('Deleted from class')}
-            onCreate={() => console.log('Created form class')}
+            onDelete={(/* chart: uPlot */) => console.log('Deleted from class')}
+            onCreate={(/* chart: uPlot */) => console.log('Created from class')}
         />);
     }
 }
@@ -79,15 +80,15 @@ const HooksApp = () => {
         options={options}
         data={data}
         target={root}
-        onDelete={() => console.log('Deleted from hooks')}
-        onCreate={() => console.log('Created from hooks')}
+        onDelete={(/* chart: uPlot */) => console.log('Deleted from hooks')}
+        onCreate={(/* chart: uPlot */) => console.log('Created from hooks')}
     />);
 }
 
 ReactDOM.render(
-    <div>
-        <HooksApp />,
+    <React.Fragment>
+        <HooksApp />
         <ClassApp />
-    </div>,
+    </React.Fragment>,
     root
 );

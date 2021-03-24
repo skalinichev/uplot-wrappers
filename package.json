@@ -22,30 +22,26 @@
         "Vue",
         "Wrapper"
     ],
-    "files": [
-        "react.*",
-        "vue.*"
-    ],
-    "scripts": {
-        "build": "concurrently 'npm run buildUMD' 'npm run buildProd'",
-        "buildUMD": "webpack",
-        "buildProd": "webpack --env=mode=production"
+    "workspaces": {
+        "packages": ["common", "react", "vue"],
+        "nohoist": ["**/@types/**"]
     },
-    "dependencies": {},
-    "peerDependencies": {
-        "react": "^16.8.6",
-        "uplot": "^1.6.7",
-        "vue": "^2.6.12"
+    "private": true,
+    "scripts": {
+        "build": "concurrently 'npm run buildReact' 'npm run buildVue'",
+        "buildVue": "webpack --env=framework=vue",
+        "buildReact": "webpack --env=framework=react",
+        "buildProd": "concurrently 'npm run buildVue -- --env=mode=production' 'npm run buildReact -- --env=mode=production'"
+    },
+    "dependencies": {
     },
     "devDependencies": {
         "@babel/core": "^7.13.10",
         "@babel/preset-env": "^7.13.10",
         "@babel/preset-react": "^7.12.13",
-        "@types/react": "^16.8.25",
-        "@types/react-dom": "^16.8.5",
+        "@vue/babel-preset-jsx": "^1.2.4",
         "@typescript-eslint/eslint-plugin": "^4.18.0",
         "@typescript-eslint/parser": "^4.18.0",
-        "@vue/babel-preset-jsx": "^1.2.4",
         "babel-loader": "^8.2.2",
         "concurrently": "^6.0.0",
         "copy-webpack-plugin": "4",
@@ -53,7 +49,6 @@
         "eslint-plugin-react": "^7.22.0",
         "eslint-plugin-vue": "^7.7.0",
         "eslint-webpack-plugin": "^2.5.2",
-        "react-dom": "^16.8.6",
         "ts-loader": "^8.0.18",
         "typescript": "^4.2.3",
         "webpack": "^4.46.0",

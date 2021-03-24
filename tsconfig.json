@@ -17,6 +17,9 @@
         "noUnusedParameters": false,
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "paths": {
+            "uplot-wrappers-common": ["common"]
+        }
     }
 }

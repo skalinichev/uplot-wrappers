@@ -1,0 +1,29 @@
+{
+    "name": "uplot-wrappers-common",
+    "version": "1.0.0",
+    "description": "Common code for React and Vue.js wrappers of uPlot",
+    "author": "Sergey Kalinichev <kalinichev.so.0@gmail.com>",
+    "license": "MIT",
+    "homepage": "https://github.com/user/project",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/user/project.git"
+    },
+    "bugs": {
+        "url": "https://github.com/user/project/issues"
+    },
+    "engines": {
+        "node": ">=8.10"
+    },
+    "keywords": [
+        "Charts",
+        "uPlot",
+        "Wrapper"
+    ],
+    "private": true,
+    "dependencies": {
+    },
+    "devDependencies": {
+        "uplot": "^1.6.7"
+    }
+}

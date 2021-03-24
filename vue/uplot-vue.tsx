@@ -2,7 +2,7 @@ import Vue, {PropType, VNode} from 'vue';
 
 import uPlot from 'uplot';
 
-import {optionsUpdateState, dataMatch} from '../common';
+import {optionsUpdateState, dataMatch} from 'uplot-wrappers-common';
 
 export default Vue.extend<
     {_chart: uPlot | null},
@@ -11,7 +11,7 @@ export default Vue.extend<
     // eslint-disable-next-line
     {options: uPlot.Options, data: uPlot.AlignedData, target?: HTMLElement | ((self: uPlot, init: Function) => void)}
 >({
-    name: 'UPlotVue',
+    name: 'UplotVue',
     props: {
         options: {type: Object as PropType<uPlot.Options>, required: true},
         data: {type: Array as unknown as PropType<uPlot.AlignedData>, required: true},

@@ -1,0 +1,41 @@
+{
+    "name": "uplot-vue",
+    "version": "1.0.0",
+    "description": "Vue.js wrapper for uPlot",
+    "author": "Sergey Kalinichev <kalinichev.so.0@gmail.com>",
+    "license": "MIT",
+    "homepage": "https://github.com/user/project",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/user/project.git"
+    },
+    "bugs": {
+        "url": "https://github.com/user/project/issues"
+    },
+    "engines": {
+        "node": ">=8.10"
+    },
+    "keywords": [
+        "Charts",
+        "uPlot",
+        "Vue",
+        "Wrapper"
+    ],
+    "files": [
+        "uplot-vue.*",
+        "*.ts"
+    ],
+    "types": "index.d.ts",
+    "main": "uplot-vue.js",
+    "dependencies": {
+    },
+    "peerDependencies": {
+        "uplot": "^1.6.7",
+        "vue": "^2.6.12"
+    },
+    "devDependencies": {
+        "uplot": "^1.6.7",
+        "uplot-wrappers-common": "1.0.0",
+        "vue": "^2.6.12"
+    }
+}
