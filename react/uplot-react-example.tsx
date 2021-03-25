@@ -40,6 +40,7 @@ class ClassApp extends React.Component<
     }
     render(): React.ReactNode {
         return (<UPlotReact
+            key="class-key"
             options={this.state.options}
             data={this.state.data}
             target={root}
@@ -77,6 +78,7 @@ const HooksApp = () => {
         });
     }, 2000);
     return (<UPlotReact
+        key="hooks-key"
         options={options}
         data={data}
         target={root}

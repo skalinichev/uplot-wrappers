@@ -57,6 +57,7 @@ const App = Vue.extend<
         return (<div ref='root'>
             <UplotVue
                 // @ts-ignore
+                key="render-key"
                 options={this.options}
                 data={this.data}
                 target={this.target}
