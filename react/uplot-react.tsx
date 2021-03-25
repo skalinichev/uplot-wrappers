@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 
 import uPlot from 'uplot';
 
@@ -12,30 +12,31 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
     onDelete?: (chart: uPlot) => void
     onCreate?: (chart: uPlot) => void
 }): JSX.Element | null {
-    const [chart, setChart] = useState<uPlot | null>(null);
+    const chartRef = useRef<uPlot | null>(null);
 
     function destroy(chart: uPlot | null) {
         if (chart) {
             onDelete(chart);
             chart.destroy();
-            setChart(null);
+            chartRef.current = null;
         }
     }
     function create() {
         const newChart = new uPlot(options, data, target)
-        setChart(newChart);
+        chartRef.current = newChart;
         onCreate(newChart);
     }
     // componentDidMount + componentWillUnmount
     useEffect(() => {
         create();
         return () => {
-            destroy(chart);
+            destroy(chartRef.current);
         }
     }, []);
     // componentDidUpdate
     const prevProps = useRef({options, data, target}).current;
     useEffect(() => {
+        const chart = chartRef.current;
         if (prevProps.options !== options) {
             const optionsState = optionsUpdateState(prevProps.options, options);
             if (!chart || optionsState === 'create') {
