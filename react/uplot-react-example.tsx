@@ -43,7 +43,8 @@ class ClassApp extends React.Component<
             key="class-key"
             options={this.state.options}
             data={this.state.data}
-            target={root}
+            // Let the uplot-react wrapper create the DOM node itself
+            // target={root}
             onDelete={(/* chart: uPlot */) => console.log('Deleted from class')}
             onCreate={(/* chart: uPlot */) => console.log('Created from class')}
         />);

@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import uPlot from 'uplot';
 
@@ -13,6 +13,7 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
     onCreate?: (chart: uPlot) => void
 }): JSX.Element | null {
     const chartRef = useRef<uPlot | null>(null);
+    const targetRef = useRef<HTMLDivElement>(null);
 
     function destroy(chart: uPlot | null) {
         if (chart) {
@@ -22,7 +23,7 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
         }
     }
     function create() {
-        const newChart = new uPlot(options, data, target)
+        const newChart = new uPlot(options, data, target || targetRef.current as HTMLDivElement)
         chartRef.current = newChart;
         onCreate(newChart);
     }
@@ -65,5 +66,5 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
         };
     }, [options, data, target]);
 
-    return null;
+    return target ? null : <div ref={targetRef}></div>;
 }

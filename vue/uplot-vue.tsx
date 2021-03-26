@@ -1,4 +1,4 @@
-import Vue, {PropType, VNode} from 'vue';
+import Vue, {CreateElement, PropType, VNode} from 'vue';
 
 import uPlot from 'uplot';
 
@@ -64,11 +64,12 @@ export default Vue.extend<
             }
         },
         _create() {
-            this._chart = new uPlot(this.$props.options, this.$props.data, this.$props.target);
+            this._chart = new uPlot(this.$props.options, this.$props.data, this.$props.target || this.$refs.targetRef);
             this.$emit('create', this._chart);
         }
     },
-    render() {
-        return null as unknown as VNode;
+    // eslint-disable-next-line
+    render(h: CreateElement): VNode {
+        return this.$props.target ? null as unknown as VNode : <div ref='targetRef'></div>;
     }
 });

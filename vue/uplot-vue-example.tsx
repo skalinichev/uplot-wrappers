@@ -30,7 +30,7 @@ const App = Vue.extend<
         };
     },
     mounted() {
-        this.target = document.querySelector('#chart')/* this.$refs.root */ as HTMLElement;
+        this.target = this.$refs.root as HTMLElement;
         setInterval(() => {
             const rand = Math.round(Math.random() * 10);
             const options = {
@@ -60,7 +60,8 @@ const App = Vue.extend<
                 key="render-key"
                 options={this.options}
                 data={this.data}
-                target={this.target}
+                // Let the uplot-vue wrapper create the DOM node itself
+                // target={this.target}
                 onDelete={(/* chart: uPlot */) => console.log('Deleted from render function')}
                 onCreate={(/* chart: uPlot */) => console.log('Created from render function')}
             />
@@ -70,6 +71,6 @@ const App = Vue.extend<
 
 // Render from template
 // @ts-ignore
-new App({el: '#root', render: null});
+new App({el: '#template-root', render: null});
 // Render from render function
-new App({el: '#root'});
+new App({el: '#function-root'});
