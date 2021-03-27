@@ -1,16 +1,16 @@
 {
     "name": "uplot-react",
-    "version": "1.0.0",
-    "description": "React wrapper for uPlot",
+    "version": "1.0.2",
+    "description": "React wrapper for uPlot that allows you to work with charts declaratively inside your favorite framework",
     "author": "Sergey Kalinichev <kalinichev.so.0@gmail.com>",
     "license": "MIT",
-    "homepage": "https://github.com/user/project",
+    "homepage": "https://github.com/skalinichev/uplot-wrappers#readme",
     "repository": {
         "type": "git",
-        "url": "https://github.com/user/project.git"
+        "url": "https://github.com/skalinichev/uplot-wrappers.git"
     },
     "bugs": {
-        "url": "https://github.com/user/project/issues"
+        "url": "https://github.com/skalinichev/uplot-wrappers/issues"
     },
     "engines": {
         "node": ">=8.10"
@@ -27,18 +27,17 @@
     ],
     "main": "uplot-react.js",
     "types": "index.d.ts",
-    "dependencies": {
-    },
+    "dependencies": {},
     "peerDependencies": {
         "react": "^16.8.6",
         "uplot": "^1.6.7"
     },
     "devDependencies": {
-        "uplot-wrappers-common": "1.0.0",
         "@types/react": "^16.8.25",
         "@types/react-dom": "^16.8.5",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "uplot": "^1.6.7"
+        "uplot": "^1.6.7",
+        "uplot-wrappers-common": "1.0.2"
     }
 }

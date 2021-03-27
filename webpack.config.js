@@ -60,6 +60,8 @@ module.exports = env => {
                 {from: `${framework}/**/*html`, force: true, flatten: true},
                 {from: `${framework}/types/**`, force: true, flatten: true},
                 {from: `${framework}/package.json`, force: true, flatten: true},
+                {from: 'README.md', force: true, flatten: true},
+                {from: 'LICENSE', force: true, flatten: true},
                 {from: "node_modules/uplot/dist/uPlot.iife.min.js", force: true, flatten: true},
                 {from: "node_modules/uplot/dist/uPlot.min.css", force: true, flatten: true}
             ])
