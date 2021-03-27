@@ -55,7 +55,9 @@ const Chart = () =>
     />);
 ```
 ## Demo
-See live demo TODO
+To run the demo app locally clone this repository, then execute the following commands inside the project root directory:
+
+`yarn install && yarn run serveReact`
 
 # Vue.js
 
@@ -109,7 +111,9 @@ const Chart = Vue.extend({
 });
 ```
 ## Demo
-See live demo TODO
+To run the demo app locally clone this repository, then execute the following commands inside the project root directory:
+
+`yarn install && yarn run serveVue`
 
 # Documentation
 | Parameter | Requirement | Description |

@@ -1,6 +1,7 @@
 import Vue, {VNode, CreateElement} from 'vue';
 
 import uPlot from 'uplot';
+import 'uplot/dist/uPlot.min.css';
 
 import UplotVue from './uplot-vue';
 
@@ -11,6 +12,7 @@ const App = Vue.extend<
 >({
     name: 'UplotVueExample',
     components: {uplotvue: UplotVue},
+    // @ts-ignore
     data() {
         return {
             options: {
@@ -25,24 +27,29 @@ const App = Vue.extend<
                 }],
                 scales: {x: {time: false}}
             },
-            data: [[0, 1, 3, 4, 5], [10, 20, 10, 0, 30]],
             target: null as unknown as HTMLElement
         };
+    },
+    beforeMount() {
+        // Initialize data inside mounted hook, to prevent Vue from adding watchers, otherwise performance becomes unbearable
+        this.data = [new Array(100000).fill(0).map((_, i) => i), new Array(100000).fill(0).map((_, i) => i % 1000)];
     },
     mounted() {
         this.target = this.$refs.root as HTMLElement;
         setInterval(() => {
-            const rand = Math.round(Math.random() * 10);
             const options = {
                 ...this.options,
                 title: (this.$refs.root as HTMLElement).id ? 'Rendered with template' : 'Rendered with function'
             };
-            const data: uPlot.AlignedData = [...this.data];
-            data[1] = [...data[1]];
-            data[1][rand % (data[1].length - 1)] = rand * 3;
+            const data: uPlot.AlignedData = [
+                [...this.data[0], this.data[0].length],
+                [...this.data[1], this.data[0].length % 1000]
+            ];
             this.data = data;
+            // Since we disabled reactivity for data above
+            this.$forceUpdate();
             this.options = options;
-        }, 2000);
+        }, 100);
     },
     methods: {
         onCreateFromTemplate(/* chart: uPlot */) {

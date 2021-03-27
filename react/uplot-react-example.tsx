@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import ReactDOM, {unstable_batchedUpdates} from 'react-dom';
 
 import uPlot from 'uplot';
+import 'uplot/dist/uPlot.min.css';
 
 import UPlotReact from './uplot-react';
 
@@ -24,19 +25,19 @@ class ClassApp extends React.Component<
             }],
                 scales: {x: {time: false}}
             },
-            data: [[0, 1, 3, 4, 5], [10, 20, 10, 0, 30]]
+            data: [new Array(100000).fill(0).map((_, i) => i), new Array(100000).fill(0).map((_, i) => i % 1000)]
         };
         setInterval(() => {
-            const rand = Math.round(Math.random() * 10);
             const options = {
                 ...this.state.options,
                 title: 'Rendered with class'
             };
-            const data: uPlot.AlignedData = [...this.state.data];
-            data[1] = [...data[1]];
-            data[1][rand % (data[1].length - 1)] = rand * 3;
+            const data: uPlot.AlignedData = [
+                [...this.state.data[0], this.state.data[0].length],
+                [...this.state.data[1], this.state.data[0].length % 1000]
+            ];
             this.setState({data, options});
-        }, 2000);
+        }, 100);
     }
     render(): React.ReactNode {
         return (<UPlotReact
@@ -63,21 +64,28 @@ const HooksApp = () => {
         }],
         scales: {x: {time: false}}
     });
-    const [data, setData] = useState<uPlot.AlignedData>([[0, 1, 3, 4, 5], [10, 20, 10, 0, 30]]);
+    const initialState = useMemo<uPlot.AlignedData>(() =>
+        ([new Array(100000).fill(0).map((_, i) => i), new Array(100000).fill(0).map((_, i) => i % 1000)])
+    , []);
+    const [data, setData] = useState<uPlot.AlignedData>(initialState);
+    useEffect(() => {
+
+    }, []);
     setTimeout(() => {
-        const rand = Math.round(Math.random() * 10);
         const newOptions = {
             ...options,
             title: 'Rendered with hooks'
         };
-        const newData: uPlot.AlignedData = [...data];
-        newData[1] = [...newData[1]];
-        newData[1][rand % (newData[1].length - 1)] = rand * 3;
+        const newData: uPlot.AlignedData = [
+            [...data[0], data[0].length],
+            [...data[1], data[0].length % 1000]
+        ];
+
         unstable_batchedUpdates(() => {
             setData(newData);
             setOptions(newOptions);
         });
-    }, 2000);
+    }, 100);
     return (<UPlotReact
         key="hooks-key"
         options={options}

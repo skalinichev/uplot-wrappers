@@ -3,7 +3,7 @@
         "baseUrl": ".",
         "outDir": "./dist/",
         "module": "es2015",
-        "target": "es5",
+        "target": "es6",
         "esModuleInterop": true,
         "sourceMap": true,
         "downlevelIteration": true,
@@ -20,6 +20,7 @@
         "skipLibCheck": true,
         "paths": {
             "uplot-wrappers-common": ["common"]
-        }
+        },
+        "lib": ["es2015", "dom"]
     }
 }

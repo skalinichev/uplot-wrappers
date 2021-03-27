@@ -4,14 +4,17 @@ const path = require('path');
 
 const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = env => {
-    const {framework} = env;
+    const {framework, example} = env;
     const entry = {
-        [`uplot-${framework}`]: `./${framework}/uplot-${framework}`,
-        [`uplot-${framework}-example`]: `./${framework}/uplot-${framework}-example`
+        [`uplot-${framework}`]: `./${framework}/uplot-${framework}`
     }
-
+    if (example) {
+        entry[`uplot-${framework}-example`] = `./${framework}/uplot-${framework}-example`;
+    }
+    const targets = example ? 'last 1 chrome version' : ['ie 11', 'last 1 chrome version']
     return ({
         mode: env.mode ? env.mode : 'development',
         devtool: 'source-map',
@@ -32,7 +35,7 @@ module.exports = env => {
                 use: [
                     {
                         loader: 'babel-loader',
-                        options: {presets: ['@babel/preset-react']}
+                        options: {presets: ['@babel/preset-react', ['@babel/preset-env', {targets}]]}
                     },
                     {
                         loader: 'ts-loader',
@@ -45,31 +48,44 @@ module.exports = env => {
                 use: [
                     {
                         loader: 'babel-loader',
-                        options: {presets: ['@vue/babel-preset-jsx']}
+                        options: {presets: ['@vue/babel-preset-jsx', ['@babel/preset-env', {targets}]]}
                     },
                     {
                         loader: 'ts-loader',
                         options: {configFile: path.join(__dirname, 'vue', 'tsconfig.json'), context: __dirname}
                     }
                 ]
-            },]
+            }, {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            }]
         },
         plugins: [
             new ESLintPlugin({extensions: ['ts', 'tsx']}),
             new CopyPlugin([
-                {from: `${framework}/**/*html`, force: true, flatten: true},
                 {from: `${framework}/types/**`, force: true, flatten: true},
                 {from: `${framework}/package.json`, force: true, flatten: true},
                 {from: 'README.md', force: true, flatten: true},
-                {from: 'LICENSE', force: true, flatten: true},
-                {from: "node_modules/uplot/dist/uPlot.iife.min.js", force: true, flatten: true},
-                {from: "node_modules/uplot/dist/uPlot.min.css", force: true, flatten: true}
-            ])
+                {from: 'LICENSE', force: true, flatten: true}
+            ]),
+            new HtmlWebpackPlugin({scriptLoading: 'defer', template: `${framework}/uplot-${framework}-example.html`})
         ],
         resolve: {
-            extensions: ['.ts', '.tsx', '.js']
+            extensions: ['.ts', '.tsx', '.js'],
+            alias: {
+                vue: 'vue/dist/vue.js'
+            }
         },
-        externals: {
+        devServer: {
+            contentBase: path.join(__dirname, framework, 'dist'),
+            compress: true,
+            historyApiFallback: true,
+            hot: true,
+            open: true,
+            overlay: true,
+            port: 8080
+        },
+        externals: example ? {} : {
             react: {
                 amd: 'react',
                 commonjs: 'react',
@@ -93,7 +109,7 @@ module.exports = env => {
                 commonjs: 'vue',
                 commonjs2: 'vue',
                 root: 'Vue'
-            },
+            }
         }
     });
 }
