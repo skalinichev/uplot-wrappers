@@ -55,9 +55,13 @@ const Chart = () =>
     />);
 ```
 ## Demo
-To run the demo app locally clone this repository, then execute the following commands inside the project root directory:
+See the [live demo](https://codesandbox.io/s/uplot-react-6ykeb?file=/react/uplot-react-example.tsx "live demo")
 
-`yarn install && yarn run serveReact`
+You can also run the demo app locally:
+
+`$ git clone https://github.com/skalinichev/uplot-wrappers.git`
+
+`$ cd uplot-wrappers && yarn install && yarn run serveReact`
 
 # Vue.js
 
@@ -111,9 +115,13 @@ const Chart = Vue.extend({
 });
 ```
 ## Demo
-To run the demo app locally clone this repository, then execute the following commands inside the project root directory:
+See the [live demo](https://codesandbox.io/s/uplot-vue-khi4m?file=/vue/uplot-vue-example.tsx "live demo")
 
-`yarn install && yarn run serveVue`
+You can also run the demo app locally:
+
+`$ git clone https://github.com/skalinichev/uplot-wrappers.git`
+
+`$ cd uplot-wrappers && yarn install && yarn run serveVue`
 
 # Documentation
 | Parameter | Requirement | Description |
