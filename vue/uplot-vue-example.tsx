@@ -5,6 +5,12 @@ import 'uplot/dist/uPlot.min.css';
 
 import UplotVue from './uplot-vue';
 
+const dummyPlugin = (): uPlot.Plugin => ({
+    hooks: {
+        init(u: uPlot, opts: uPlot.Options) {void u; void opts;}
+    }
+});
+
 const App = Vue.extend<
     {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement},
     {onCreateFromTemplate: (chart: uPlot) => void, onDeleteFromTemplate: (chart: uPlot) => void},
@@ -25,6 +31,7 @@ const App = Vue.extend<
                     stroke: 'blue',
                     fill: 'blue'
                 }],
+                plugins: [dummyPlugin()],
                 scales: {x: {time: false}}
             },
             target: null as unknown as HTMLElement
@@ -32,7 +39,7 @@ const App = Vue.extend<
     },
     beforeMount() {
         // Initialize data inside mounted hook, to prevent Vue from adding watchers, otherwise performance becomes unbearable
-        this.data = [new Array(100000).fill(0).map((_, i) => i), new Array(100000).fill(0).map((_, i) => i % 1000)];
+        this.data = [[...new Array(100000)].map((_, i) => i), [...new Array(100000)].map((_, i) => i % 1000)];
     },
     mounted() {
         this.target = this.$refs.root as HTMLElement;
@@ -67,7 +74,7 @@ const App = Vue.extend<
                 key="render-key"
                 options={this.options}
                 data={this.data}
-                // Let the uplot-vue wrapper create the DOM node itself
+                // Uncomment the line below to use predefined target
                 // target={this.target}
                 onDelete={(/* chart: uPlot */) => console.log('Deleted from render function')}
                 onCreate={(/* chart: uPlot */) => console.log('Created from render function')}
