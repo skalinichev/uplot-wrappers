@@ -26,7 +26,9 @@ module.exports = env => {
         output: {
             filename: `[name]${env.mode === 'production' ? '.min' : ''}.js`,
             libraryTarget: 'umd',
-            path: path.join(__dirname, framework, 'dist')
+            path: path.join(__dirname, framework, 'dist'),
+            library: `Uplot${framework[0].toUpperCase()}${framework.slice(1)}`,
+            libraryExport: "default"
         },
         module: {
             rules: [{
