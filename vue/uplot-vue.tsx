@@ -28,7 +28,7 @@ export default Vue.extend<
         return {_chart: null};
     },
     watch: {
-        options(prevOptions: uPlot.Options, options: uPlot.Options) {
+        options(options: uPlot.Options, prevOptions: uPlot.Options) {
             const optionsState = optionsUpdateState(prevOptions, options);
             if (!this._chart || optionsState === 'create') {
                 this._destroy();
@@ -41,7 +41,7 @@ export default Vue.extend<
             this._destroy();
             this._create();
         },
-        data(prevData: uPlot.AlignedData, data: uPlot.AlignedData) {
+        data(data: uPlot.AlignedData, prevData: uPlot.AlignedData) {
             if (!this._chart) {
                 this._create();
             } else if (!dataMatch(prevData, data)) {
