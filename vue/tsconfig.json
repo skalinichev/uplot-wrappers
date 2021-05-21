@@ -3,7 +3,7 @@
     "compilerOptions": {
         "jsx": "preserve",
         "jsxFactory": "VueTsxSupport",
-        "typeRoots": ["node_modules/@types", "./dev-types"],
+        "typeRoots": ["node_modules/@types", "./dev-types", "./types"],
 
         "esModuleInterop": true,
         "noImplicitThis": true

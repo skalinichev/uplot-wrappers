@@ -27,15 +27,14 @@
     ],
     "types": "index.d.ts",
     "main": "uplot-vue.js",
-    "dependencies": {
-    },
+    "dependencies": {},
     "peerDependencies": {
-        "uplot": "^1.6.7",
-        "vue": "^2.6.12"
+        "uplot": "^1.6.7"
     },
     "devDependencies": {
         "uplot": "^1.6.7",
         "uplot-wrappers-common": "1.0.2",
-        "vue": "^2.6.12"
+        "vue": "^2.6.12",
+        "vue3": "npm:vue@^3.0.11"
     }
 }

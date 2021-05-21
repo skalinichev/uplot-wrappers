@@ -39,6 +39,7 @@
         "buildReact": "webpack --env=framework=react",
         "buildProd": "concurrently 'npm run buildVue -- --env=mode=production' 'npm run buildReact -- --env=mode=production'",
         "serveVue": "webpack serve  --env=framework=vue --env=example=true",
+        "serveVue3": "webpack serve  --env=framework=vue --env=frameworkVersion=3 --env=example=true",
         "serveReact": "webpack serve --env=framework=react --env=example=true"
     },
     "dependencies": {},
@@ -48,6 +49,7 @@
         "@babel/preset-react": "^7.12.13",
         "@typescript-eslint/eslint-plugin": "^4.18.0",
         "@typescript-eslint/parser": "^4.18.0",
+        "@vue/babel-plugin-jsx": "^1.0.6",
         "@vue/babel-preset-jsx": "^1.2.4",
         "babel-loader": "^8.2.2",
         "concurrently": "^6.0.0",

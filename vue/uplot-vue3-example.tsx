@@ -1,4 +1,5 @@
-import Vue, {VNode, CreateElement} from 'vue';
+// @ts-ignore
+import {VNode, createApp} from 'vue';
 
 import uPlot from 'uplot';
 import 'uplot/dist/uPlot.min.css';
@@ -11,11 +12,7 @@ const dummyPlugin = (): uPlot.Plugin => ({
     }
 });
 
-const App = Vue.extend<
-    {options: uPlot.Options, data: uPlot.AlignedData, target: HTMLElement},
-    {onCreateFromTemplate: (chart: uPlot) => void, onDeleteFromTemplate: (chart: uPlot) => void},
-    Record<string, never>, Record<string, never>
->({
+const app = createApp({
     name: 'UplotVueExample',
     components: {uplotvue: UplotVue},
     // @ts-ignore
@@ -58,19 +55,10 @@ const App = Vue.extend<
             this.options = options;
         }, 100);
     },
-    methods: {
-        onCreateFromTemplate(/* chart: uPlot */) {
-            console.log('Created from template');
-        },
-        onDeleteFromTemplate(/* chart: uPlot */) {
-            console.log('Deleted from template');
-        }
-    },
-    render(h: CreateElement): VNode {
+    render(): VNode {
         // @ts-ignore
         return (<div ref='root'>
             <UplotVue
-                // @ts-ignore
                 key="render-key"
                 // @ts-ignore
                 options={this.options}
@@ -84,8 +72,5 @@ const App = Vue.extend<
     }
 });
 
-// Render from template
-// @ts-ignore
-new App({el: '#template-root', render: null});
 // Render from render function
-new App({el: '#function-root'});
+app.mount('#function-root');

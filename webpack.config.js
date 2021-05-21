@@ -7,12 +7,13 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = env => {
-    const {framework, example} = env;
+    const {framework, example, frameworkVersion = ''} = env;
+    const vue3 = frameworkVersion == '3';
     const entry = {
         [`uplot-${framework}`]: `./${framework}/uplot-${framework}`
     }
     if (example) {
-        entry[`uplot-${framework}-example`] = `./${framework}/uplot-${framework}-example`;
+        entry[`uplot-${framework}-example`] = `./${framework}/uplot-${framework}${frameworkVersion}-example`;
     }
     const targets = example ? 'last 1 chrome version' : ['ie 11', 'last 1 chrome version']
     return ({
@@ -50,7 +51,10 @@ module.exports = env => {
                 use: [
                     {
                         loader: 'babel-loader',
-                        options: {presets: ['@vue/babel-preset-jsx', ['@babel/preset-env', {targets}]]}
+                        options: {
+                            presets: [['@babel/preset-env', {targets}], ...(!vue3 ? ['@vue/babel-preset-jsx'] : [])],
+                            plugins: vue3 ? ['@vue/babel-plugin-jsx'] : []
+                        }
                     },
                     {
                         loader: 'ts-loader',
@@ -75,7 +79,7 @@ module.exports = env => {
         resolve: {
             extensions: ['.ts', '.tsx', '.js'],
             alias: {
-                vue: 'vue/dist/vue.js'
+                vue: vue3 ? 'vue3/dist/vue.esm-bundler.js' : 'vue/dist/vue.js'
             }
         },
         devServer: {

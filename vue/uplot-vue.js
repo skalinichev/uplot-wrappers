@@ -1,20 +1,14 @@
-import Vue, {CreateElement, PropType, VNode} from 'vue';
+import Vue, {defineComponent, createVNode} from 'vue';
 
 import uPlot from 'uplot';
 
 import {optionsUpdateState, dataMatch} from 'uplot-wrappers-common';
 
-export default Vue.extend<
-    {_chart: uPlot | null},
-    {_destroy: () => void, _create: () => void},
-    Record<string, never>,
-    // eslint-disable-next-line
-    {options: uPlot.Options, data: uPlot.AlignedData, target?: HTMLElement | ((self: uPlot, init: Function) => void)}
->({
+export default ((defineComponent ? defineComponent : (v) => v))({
     name: 'UplotVue',
     props: {
-        options: {type: Object as PropType<uPlot.Options>, required: true},
-        data: {type: Array as unknown as PropType<uPlot.AlignedData>, required: true},
+        options: {type: Object, required: true},
+        data: {type: Array, required: true},
         target: {
             validator(target) {
                 return target == null || target instanceof HTMLElement || typeof target === 'function';
@@ -23,12 +17,12 @@ export default Vue.extend<
             required: false
         }
     },
-    data(): {_chart: uPlot | null} {
+    data() {
         // eslint-disable-next-line
         return {_chart: null};
     },
     watch: {
-        options(options: uPlot.Options, prevOptions: uPlot.Options) {
+        options(options, prevOptions) {
             const optionsState = optionsUpdateState(prevOptions, options);
             if (!this._chart || optionsState === 'create') {
                 this._destroy();
@@ -41,7 +35,7 @@ export default Vue.extend<
             this._destroy();
             this._create();
         },
-        data(data: uPlot.AlignedData, prevData: uPlot.AlignedData) {
+        data(data, prevData) {
             if (!this._chart) {
                 this._create();
             } else if (!dataMatch(prevData, data)) {
@@ -51,6 +45,9 @@ export default Vue.extend<
     },
     mounted() {
         this._create();
+    },
+    beforeUnmount() {
+        this._destroy();
     },
     beforeDestroy() {
         this._destroy();
@@ -68,8 +65,9 @@ export default Vue.extend<
             this.$emit('create', this._chart);
         }
     },
-    // eslint-disable-next-line
-    render(h: CreateElement): VNode {
-        return this.$props.target ? null as unknown as VNode : <div ref='targetRef'></div>;
+    render(h) {
+        return this.$props.target ? null : (createVNode ? createVNode : h)('div', {
+          ref: 'targetRef'
+        });
     }
 });
