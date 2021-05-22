@@ -1,7 +1,7 @@
 # uPlot wrappers
 
 
-A collection of [uPlot](https://github.com/leeoniya/uPlot "uPlot") wrappers that allows you to work with charts declaratively inside your favorite framework.
+A collection of [uPlot](https://github.com/leeoniya/uPlot "uPlot") wrappers that allow you to work with charts declaratively inside your favorite framework.
 
 **Table of Contents**
 
@@ -70,7 +70,7 @@ Install uplot-vue package with uplot dependency:
 - Using npm: `$ npm install uplot-vue uplot`
 - Using yarn: `$ yarn add uplot-vue uplot`
 
-You also need Vue.js 2.6 to be installed inside your project tree, Vue.js 3 is not supported yet.
+You also need Vue.js to be installed inside your project tree (both 2.6 and 3.x versions are supported).
 
 ## How to use
 Using template
@@ -85,23 +85,33 @@ Using template
     />
  </template>
  <script>
+    // Vue.js 2
     import Vue from 'vue';
+    // Vue.js 3
+    import {createApp} from 'vue';
     import uPlot from 'uplot';
     import UplotVue from 'uplot-vue';
     import 'uplot/dist/uPlot.min.css';
 
+    // Vue.js 2
     const Chart = Vue.extend({components: {uplotvue: UplotVue}});
+    // Vue.js 3
+    const Chart = createApp({components: {uplotvue: UplotVue}});
  </script>
 ```
 Using JSX
 ```javascript
+// Vue.js 2
 import Vue from 'vue';
+// Vue.js 3
+import {createApp} from 'vue';
 import uPlot from 'uplot';
 import UplotVue from 'uplot-vue';
 import 'uplot/dist/uPlot.min.css';
 
-const Chart = Vue.extend({
-    render(h) {
+{
+    ...,
+    render() {
         return (
             <UplotVue
                 options={options}
@@ -112,16 +122,24 @@ const Chart = Vue.extend({
             />
         );
     }
-});
+}
 ```
 ## Demo
-See the [live demo](https://codesandbox.io/s/uplot-vue-khi4m?file=/vue/uplot-vue-example.tsx "live demo")
+See the [Vue.js 2 live demo](https://codesandbox.io/s/uplot-vue-khi4m?file=/vue/uplot-vue-example.tsx "Vue.js 2 live demo")
 
 You can also run the demo app locally:
 
 `$ git clone https://github.com/skalinichev/uplot-wrappers.git`
 
-`$ cd uplot-wrappers && yarn install && yarn run serveVue`
+`$ cd uplot-wrappers && yarn install`
+
+Vue.js 2:
+
+`$ yarn run serveVue`
+
+Vue.js 3:
+
+`$ yarn run serveVue3`
 
 # Documentation
 | Parameter | Requirement | Description |
