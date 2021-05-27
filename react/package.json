@@ -29,7 +29,7 @@
     "types": "index.d.ts",
     "dependencies": {},
     "peerDependencies": {
-        "react": "^16.8.6",
+        "react": ">=16.8.6",
         "uplot": "^1.6.7"
     },
     "devDependencies": {
