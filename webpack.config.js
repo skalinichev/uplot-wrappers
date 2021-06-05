@@ -62,6 +62,12 @@ module.exports = env => {
                     }
                 ]
             }, {
+                test: /\.js$/,
+                use: [{
+                    loader: 'babel-loader',
+                    options: {presets: [['@babel/preset-env']]}
+                }]
+            }, {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"]
             }]
