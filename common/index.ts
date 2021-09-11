@@ -2,10 +2,13 @@ import uPlot from 'uplot';
 
 type OptionsUpdateState = 'keep' | 'update' | 'create';
 
-const stringify = (obj: Record<string, unknown>) =>
-    JSON.stringify(obj, (key, value) =>
-        typeof value === 'function' ? value.toString() : value
-    )
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+if (!Object.is) {
+    // eslint-disable-next-line
+    Object.defineProperty(Object, "is", {value: (x: any, y: any) =>
+        (x === y && (x !== 0 || 1 / x === 1 / y)) || (x !== x && y !== y)
+    });
+}
 
 export const optionsUpdateState = (_lhs: uPlot.Options, _rhs: uPlot.Options): OptionsUpdateState => {
     const {width: lhsWidth, height: lhsHeight, ...lhs} = _lhs;
@@ -19,7 +22,7 @@ export const optionsUpdateState = (_lhs: uPlot.Options, _rhs: uPlot.Options): Op
         return 'create';
     }
     for (const k of Object.keys(lhs)) {
-        if (stringify(lhs[k]) !== stringify(rhs[k])) {
+        if (!Object.is(lhs[k], rhs[k])) {
             state = 'create';
             break;
         }
