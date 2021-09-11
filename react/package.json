@@ -1,6 +1,6 @@
 {
     "name": "uplot-react",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "React wrapper for uPlot that allows you to work with charts declaratively inside your favorite framework",
     "author": "Sergey Kalinichev <kalinichev.so.0@gmail.com>",
     "license": "MIT",
@@ -38,6 +38,6 @@
         "react": ">=16.8.6",
         "react-dom": ">=16.8.6",
         "uplot": "^1.6.7",
-        "uplot-wrappers-common": "1.1.0"
+        "uplot-wrappers-common": "1.1.1"
     }
 }
