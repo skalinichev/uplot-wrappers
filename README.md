@@ -124,6 +124,8 @@ import 'uplot/dist/uPlot.min.css';
     }
 }
 ```
+> Note: Property changes by mutation are not supported due to [Vue limitation](https://github.com/vuejs/vue/issues/2164) You have to create a copy of the property, i.e. replace it instead, see an [example](https://github.com/skalinichev/uplot-wrappers/blob/master/vue/uplot-vue-example.tsx#L52) for the general idea.
+
 ## Demo
 See the [Vue.js 2 live demo](https://codesandbox.io/s/uplot-vue-khi4m?file=/vue/uplot-vue-example.tsx "Vue.js 2 live demo")
 
