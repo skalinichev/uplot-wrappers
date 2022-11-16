@@ -4,13 +4,14 @@ import uPlot from 'uplot';
 
 import {optionsUpdateState, dataMatch} from 'uplot-wrappers-common';
 
-export default function UplotReact({options, data, target, onDelete = () => {}, onCreate = () => {}}: {
+export default function UplotReact({options, data, target, onDelete = () => {}, onCreate = () => {}, resetScales = true}: {
     options: uPlot.Options,
     data: uPlot.AlignedData,
     // eslint-disable-next-line
     target?: HTMLElement | ((self: uPlot, init: Function) => void),
     onDelete?: (chart: uPlot) => void
     onCreate?: (chart: uPlot) => void
+    resetScales?: boolean
 }): JSX.Element | null {
     const chartRef = useRef<uPlot | null>(null);
     const targetRef = useRef<HTMLDivElement>(null);
@@ -51,7 +52,12 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
             if (!chart) {
                 create();
             } else if (!dataMatch(prevProps.data, data)) {
-                chart.setData(data);
+                if(resetScales) {
+                    chart.setData(data, true);
+                } else {
+                    chart.setData(data, false);
+                    chart.redraw();
+                }
             }
         }
         if (prevProps.target !== target) {
@@ -64,7 +70,7 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
             prevProps.data = data;
             prevProps.target = target;
         };
-    }, [options, data, target]);
+    }, [options, data, target, resetScales]);
 
     return target ? null : <div ref={targetRef}></div>;
 }
