@@ -74,12 +74,14 @@ module.exports = env => {
         },
         plugins: [
             new ESLintPlugin({extensions: ['ts', 'tsx']}),
-            new CopyPlugin([
-                {from: `${framework}/types/**`, force: true, flatten: true},
-                {from: `${framework}/package.json`, force: true, flatten: true},
-                {from: 'README.md', force: true, flatten: true},
-                {from: 'LICENSE', force: true, flatten: true}
-            ]),
+            new CopyPlugin({
+                patterns: [
+                    {from: `${framework}/types/**`, force: true},
+                    {from: `${framework}/package.json`, force: true},
+                    {from: 'README.md', force: true},
+                    {from: 'LICENSE', force: true}
+                ]
+            }),
             new HtmlWebpackPlugin({scriptLoading: 'defer', template: `${framework}/uplot-${framework}-example.html`})
         ],
         resolve: {
@@ -89,12 +91,13 @@ module.exports = env => {
             }
         },
         devServer: {
-            contentBase: path.join(__dirname, framework, 'dist'),
+            static: {
+                directory: path.join(__dirname, framework, 'dist'),
+            },
             compress: true,
             historyApiFallback: true,
             hot: true,
             open: true,
-            overlay: true,
             port: 8080
         },
         externals: example ? {} : {
