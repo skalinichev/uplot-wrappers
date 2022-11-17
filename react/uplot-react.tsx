@@ -52,7 +52,7 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
             if (!chart) {
                 create();
             } else if (!dataMatch(prevProps.data, data)) {
-                if(resetScales) {
+                if (resetScales) {
                     chart.setData(data, true);
                 } else {
                     chart.setData(data, false);

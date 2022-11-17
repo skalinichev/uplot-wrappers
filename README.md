@@ -151,3 +151,4 @@ Vue.js 3:
 | target  |optional|Target html element or init function for uPlot. Passed as the third argument to uPlot constructor: `new uPlot(options, data, target)` A new div target element will be created automatically if none is passed in the props|
 | onCreate  |optional|Callback function, invoked upon uPlot instance creation or recreation|
 | onDelete  |optional|Callback function, invoked before uPlot instance gets destroyed, either because the props has changed so much it's impossible to update the chart or because the component is about to be unmounted|
+| resetScales  |optional|Flag controlling whether to reset the scales on data change. Defaults to true.
