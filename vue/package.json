@@ -1,6 +1,6 @@
 {
     "name": "uplot-vue",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "description": "Vue.js wrapper for uPlot that allows you to work with charts declaratively inside your favorite framework",
     "author": "Sergey Kalinichev <kalinichev.so.0@gmail.com>",
     "license": "MIT",
@@ -33,7 +33,7 @@
     },
     "devDependencies": {
         "uplot": "^1.6.7",
-        "uplot-wrappers-common": "1.1.3",
+        "uplot-wrappers-common": "1.1.4",
         "vue": "^2.6.12",
         "vue3": "npm:vue@^3.0.11"
     }

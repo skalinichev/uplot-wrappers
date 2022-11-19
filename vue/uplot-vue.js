@@ -1,25 +1,30 @@
-import Vue, {defineComponent, createVNode} from 'vue';
+import Vue, { defineComponent, createVNode } from 'vue';
 
 import uPlot from 'uplot';
 
-import {optionsUpdateState, dataMatch} from 'uplot-wrappers-common';
+import { optionsUpdateState, dataMatch } from 'uplot-wrappers-common';
 
-export default ((defineComponent ? defineComponent : (v) => v))({
+export default (defineComponent ? defineComponent : (v) => v)({
     name: 'UplotVue',
     props: {
-        options: {type: Object, required: true},
-        data: {type: Array, required: true},
+        options: { type: Object, required: true },
+        data: { type: Array, required: true },
         target: {
             validator(target) {
                 return target == null || target instanceof HTMLElement || typeof target === 'function';
             },
             default: undefined,
-            required: false
-        }
+            required: false,
+        },
+        resetScales: {
+            type: Boolean,
+            required: false,
+            default: true,
+        },
     },
     data() {
         // eslint-disable-next-line
-        return {_chart: null};
+        return { _chart: null };
     },
     watch: {
         options(options, prevOptions) {
@@ -28,7 +33,7 @@ export default ((defineComponent ? defineComponent : (v) => v))({
                 this._destroy();
                 this._create();
             } else if (optionsState === 'update') {
-                this._chart.setSize({width: options.width, height: options.height});
+                this._chart.setSize({ width: options.width, height: options.height });
             }
         },
         target() {
@@ -39,9 +44,14 @@ export default ((defineComponent ? defineComponent : (v) => v))({
             if (!this._chart) {
                 this._create();
             } else if (!dataMatch(prevData, data)) {
-                this._chart.setData(data);
+                if (this.$props.resetScales) {
+                    this._chart.setData(data);
+                } else {
+                    this._chart.setData(data, false);
+                    this._chart.redraw();
+                }
             }
-        }
+        },
     },
     mounted() {
         this._create();
@@ -63,11 +73,13 @@ export default ((defineComponent ? defineComponent : (v) => v))({
         _create() {
             this._chart = new uPlot(this.$props.options, this.$props.data, this.$props.target || this.$refs.targetRef);
             this.$emit('create', this._chart);
-        }
+        },
     },
     render(h) {
-        return this.$props.target ? null : (createVNode ? createVNode : h)('div', {
-          ref: 'targetRef'
-        });
-    }
+        return this.$props.target
+            ? null
+            : (createVNode ? createVNode : h)('div', {
+                  ref: 'targetRef',
+              });
+    },
 });
