@@ -1,17 +1,24 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import uPlot from 'uplot';
 
-import {optionsUpdateState, dataMatch} from 'uplot-wrappers-common';
+import { optionsUpdateState, dataMatch } from 'uplot-wrappers-common';
 
-export default function UplotReact({options, data, target, onDelete = () => {}, onCreate = () => {}, resetScales = true}: {
-    options: uPlot.Options,
-    data: uPlot.AlignedData,
+export default function UplotReact({
+    options,
+    data,
+    target,
+    onDelete = () => {},
+    onCreate = () => {},
+    resetScales = true,
+}: {
+    options: uPlot.Options;
+    data: uPlot.AlignedData;
     // eslint-disable-next-line
-    target?: HTMLElement | ((self: uPlot, init: Function) => void),
-    onDelete?: (chart: uPlot) => void
-    onCreate?: (chart: uPlot) => void
-    resetScales?: boolean
+    target?: HTMLElement | ((self: uPlot, init: Function) => void);
+    onDelete?: (chart: uPlot) => void;
+    onCreate?: (chart: uPlot) => void;
+    resetScales?: boolean;
 }): JSX.Element | null {
     const chartRef = useRef<uPlot | null>(null);
     const targetRef = useRef<HTMLDivElement>(null);
@@ -24,7 +31,7 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
         }
     }
     function create() {
-        const newChart = new uPlot(options, data, target || targetRef.current as HTMLDivElement)
+        const newChart = new uPlot(options, data, target || (targetRef.current as HTMLDivElement));
         chartRef.current = newChart;
         onCreate(newChart);
     }
@@ -33,35 +40,34 @@ export default function UplotReact({options, data, target, onDelete = () => {}, 
         create();
         return () => {
             destroy(chartRef.current);
-        }
+        };
     }, []);
     // componentDidUpdate
-    const prevProps = useRef({options, data, target}).current;
+    const prevProps = useRef({ options, data, target }).current;
     useEffect(() => {
-        const chart = chartRef.current;
         if (prevProps.options !== options) {
             const optionsState = optionsUpdateState(prevProps.options, options);
-            if (!chart || optionsState === 'create') {
-                destroy(chart);
+            if (!chartRef.current || optionsState === 'create') {
+                destroy(chartRef.current);
                 create();
             } else if (optionsState === 'update') {
-                chart.setSize({width: options.width, height: options.height});
+                chartRef.current.setSize({ width: options.width, height: options.height });
             }
         }
         if (prevProps.data !== data) {
-            if (!chart) {
+            if (!chartRef.current) {
                 create();
             } else if (!dataMatch(prevProps.data, data)) {
                 if (resetScales) {
-                    chart.setData(data, true);
+                    chartRef.current.setData(data, true);
                 } else {
-                    chart.setData(data, false);
-                    chart.redraw();
+                    chartRef.current.setData(data, false);
+                    chartRef.current.redraw();
                 }
             }
         }
         if (prevProps.target !== target) {
-            destroy(chart);
+            destroy(chartRef.current);
             create();
         }
 
