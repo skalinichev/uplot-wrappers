@@ -63,6 +63,13 @@ You can also run the demo app locally:
 
 `$ cd uplot-wrappers && yarn install && yarn run serveReact`
 
+## JavaScript Demo
+
+To see a demo of a static line graph in MuPlot, check out the [Demo in CodeSandBox](https://codesandbox.io/s/uplot-react-example-documentation-dont-delete-wvp94u?file=/src/App.js "Demo in CodeSandBox"). This demo is created using React and uPlot library.
+![image](https://user-images.githubusercontent.com/62290677/233559830-5dea130c-11a3-434e-9cce-d4f00dc9bea8.png)
+
+
+
 # Vue.js
 
 ## Installation
