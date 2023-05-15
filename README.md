@@ -63,9 +63,10 @@ You can also run the demo app locally:
 
 `$ cd uplot-wrappers && yarn install && yarn run serveReact`
 
-## ReactJS Demo
+### ReactJS Demo
+simple example for getting started quickly.
+[ReactJS Demo](https://github.com/skalinichev/uplot-wrappers/blob/master/react/uplot-react-simple.js "ReactJS Demo")
 
-To see a demo of a static line graph in MuPlot, check out the [Demo in CodeSandBox](https://codesandbox.io/s/uplot-react-example-documentation-dont-delete-wvp94u?file=/src/App.js "Demo in CodeSandBox"). 
 ![image](https://user-images.githubusercontent.com/62290677/233559830-5dea130c-11a3-434e-9cce-d4f00dc9bea8.png)
 
 
