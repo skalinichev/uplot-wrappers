@@ -63,6 +63,14 @@ You can also run the demo app locally:
 
 `$ cd uplot-wrappers && yarn install && yarn run serveReact`
 
+### ReactJS Demo
+simple example for getting started quickly.
+[ReactJS Demo](https://github.com/skalinichev/uplot-wrappers/blob/master/react/uplot-react-simple.js "ReactJS Demo")
+
+![image](https://user-images.githubusercontent.com/62290677/233559830-5dea130c-11a3-434e-9cce-d4f00dc9bea8.png)
+
+
+
 # Vue.js
 
 ## Installation
