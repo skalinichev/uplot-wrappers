@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import uPlot from 'uplot';
 
@@ -8,8 +8,8 @@ export default function UplotReact({
     options,
     data,
     target,
-    onDelete = () => {},
-    onCreate = () => {},
+    onDelete,
+    onCreate,
     resetScales = true,
 }: {
     options: uPlot.Options;
@@ -22,42 +22,59 @@ export default function UplotReact({
 }): JSX.Element | null {
     const chartRef = useRef<uPlot | null>(null);
     const targetRef = useRef<HTMLDivElement>(null);
+    const propOptionsRef = useRef(options);
+    const propTargetRef = useRef(target);
+    const propDataRef = useRef(data);
 
-    function destroy(chart: uPlot | null) {
-        if (chart) {
-            onDelete(chart);
-            chart.destroy();
-            chartRef.current = null;
-        }
-    }
-    function create() {
-        const newChart = new uPlot(options, data, target || (targetRef.current as HTMLDivElement));
+    const destroy = useCallback(
+        (chart: uPlot | null) => {
+            if (chart) {
+                onDelete?.(chart);
+                chart.destroy();
+                chartRef.current = null;
+            }
+        },
+        [onDelete]
+    );
+    const create = useCallback(() => {
+        const newChart = new uPlot(
+            propOptionsRef.current,
+            propDataRef.current,
+            propTargetRef.current || (targetRef.current as HTMLDivElement)
+        );
         chartRef.current = newChart;
-        onCreate(newChart);
-    }
-    // componentDidMount + componentWillUnmount
+        onCreate?.(newChart);
+    }, [onCreate]);
+
     useEffect(() => {
         create();
         return () => {
             destroy(chartRef.current);
         };
-    }, []);
-    // componentDidUpdate
-    const prevProps = useRef({ options, data, target }).current;
+    }, [create, destroy]);
+
     useEffect(() => {
-        if (prevProps.options !== options) {
-            const optionsState = optionsUpdateState(prevProps.options, options);
+        if (propOptionsRef.current !== options) {
+            const optionsState = optionsUpdateState(propOptionsRef.current, options);
+            propOptionsRef.current = options;
             if (!chartRef.current || optionsState === 'create') {
                 destroy(chartRef.current);
                 create();
             } else if (optionsState === 'update') {
-                chartRef.current.setSize({ width: options.width, height: options.height });
+                chartRef.current.setSize({
+                    width: options.width,
+                    height: options.height,
+                });
             }
         }
-        if (prevProps.data !== data) {
+    }, [options, create, destroy]);
+
+    useEffect(() => {
+        if (propDataRef.current !== data) {
             if (!chartRef.current) {
+                propDataRef.current = data;
                 create();
-            } else if (!dataMatch(prevProps.data, data)) {
+            } else if (!dataMatch(propDataRef.current, data)) {
                 if (resetScales) {
                     chartRef.current.setData(data, true);
                 } else {
@@ -65,18 +82,19 @@ export default function UplotReact({
                     chartRef.current.redraw();
                 }
             }
+            propDataRef.current = data;
         }
-        if (prevProps.target !== target) {
-            destroy(chartRef.current);
+    }, [data, resetScales, create]);
+
+    useEffect(() => {
+        if (propTargetRef.current !== target) {
+            propTargetRef.current = target;
             create();
         }
 
-        return () => {
-            prevProps.options = options;
-            prevProps.data = data;
-            prevProps.target = target;
-        };
-    }, [options, data, target, resetScales]);
+        const chart = chartRef.current;
+        return chart ? () => destroy(chart) : undefined;
+    }, [target, create, destroy]);
 
     return target ? null : <div ref={targetRef}></div>;
 }
