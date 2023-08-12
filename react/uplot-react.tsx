@@ -25,17 +25,21 @@ export default function UplotReact({
     const propOptionsRef = useRef(options);
     const propTargetRef = useRef(target);
     const propDataRef = useRef(data);
+    const onCreateRef = useRef(onCreate);
+    const onDeleteRef = useRef(onDelete);
 
-    const destroy = useCallback(
-        (chart: uPlot | null) => {
-            if (chart) {
-                onDelete?.(chart);
-                chart.destroy();
-                chartRef.current = null;
-            }
-        },
-        [onDelete]
-    );
+    useEffect(() => {
+        onCreateRef.current = onCreate;
+        onDeleteRef.current = onDelete;
+    });
+
+    const destroy = useCallback((chart: uPlot | null) => {
+        if (chart) {
+            onDeleteRef.current?.(chart);
+            chart.destroy();
+            chartRef.current = null;
+        }
+    }, []);
     const create = useCallback(() => {
         const newChart = new uPlot(
             propOptionsRef.current,
@@ -43,8 +47,8 @@ export default function UplotReact({
             propTargetRef.current || (targetRef.current as HTMLDivElement)
         );
         chartRef.current = newChart;
-        onCreate?.(newChart);
-    }, [onCreate]);
+        onCreateRef.current?.(newChart);
+    }, []);
 
     useEffect(() => {
         create();
@@ -92,8 +96,7 @@ export default function UplotReact({
             create();
         }
 
-        const chart = chartRef.current;
-        return chart ? () => destroy(chart) : undefined;
+        return () => destroy(chartRef.current);
     }, [target, create, destroy]);
 
     return target ? null : <div ref={targetRef}></div>;
