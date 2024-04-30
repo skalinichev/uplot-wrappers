@@ -5,7 +5,7 @@
 
     export let options: uPlot.Options;
     export let data: uPlot.AlignedData;
-    export let target: HTMLDivElement = null;
+    export let target: HTMLDivElement | null = null;
     export let onDelete: (chart: uPlot) => void = () => {};
     export let onCreate: (chart: uPlot) => void = () => {};
     export let resetScales:boolean = true;
@@ -24,8 +24,7 @@
     const create = () => {
         if (chart) {
             destroy();
-        }
-        if (target instanceof HTMLElement) {
+        } else if (target instanceof HTMLElement) {
             chart = new uPlot(options, data, target || div);
             onCreate(chart);
         }
