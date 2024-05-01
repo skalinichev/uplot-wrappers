@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {Uplot} from "$lib";
+    import {UplotSvelte} from "$lib";
 
     let data = [[1, 2, 3, 4, 5], [1, 3, 2, 5, 4]];
 
@@ -50,6 +50,6 @@
 <p bind:this={log}>Log: </p>
 
 {#if flag}
-    <Uplot {data} {options} resetScales={true} {onCreate} {onDelete}/>
+    <UplotSvelte {data} {options} resetScales={true} {onCreate} {onDelete}/>
 {/if}
 
