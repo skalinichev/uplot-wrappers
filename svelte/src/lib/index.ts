@@ -1,4 +1,4 @@
 // Reexport your entry components here
-import Uplot from "$lib/Uplot.svelte";
+import UplotSvelte from "$lib/UplotSvelte.svelte";
 
-export {Uplot}
+export {UplotSvelte}

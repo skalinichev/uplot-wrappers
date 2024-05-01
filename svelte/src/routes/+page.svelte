@@ -1,7 +1,5 @@
 <script lang="ts">
     import {Uplot} from "$lib";
-    // import uPlot from "uplot";
-
 
     let data = [[1, 2, 3, 4, 5], [1, 3, 2, 5, 4]];
 

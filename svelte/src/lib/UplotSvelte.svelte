@@ -81,6 +81,11 @@
         }
     }
 
+    $: if (target) {
+        destroy();
+        create();
+    }
+
     $: {
         if (!chart) {
             create();
