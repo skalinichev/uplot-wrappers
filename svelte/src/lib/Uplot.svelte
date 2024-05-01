@@ -1,8 +1,10 @@
 <script lang="ts">
     import 'uplot/dist/uPlot.min.css';
-    import uPlot from 'uplot';
+    import type uPlot from 'uplot';
     import {onDestroy, onMount} from "svelte";
+    // import {optionsUpdateState} from "uplot-wrappers-common";
 
+    let uPlot: uPlot;
     export let options: uPlot.Options;
     export let data: uPlot.AlignedData;
     export let target: HTMLDivElement | null = null;
@@ -22,15 +24,15 @@
     };
 
     const create = () => {
-        if (chart) {
-            destroy();
-        } else if (target instanceof HTMLElement) {
+        if (uPlot && !chart) {
             chart = new uPlot(options, data, target || div);
             onCreate(chart);
         }
     };
 
-    onMount(() => {
+    onMount(async () => {
+        const uplotModule = await import('uplot');
+        uPlot = uplotModule.default;
         create();
     });
 
@@ -38,14 +40,53 @@
         destroy();
     });
 
-    $: if (options || data || target) {
-        create();
+    let prevOptions: uPlot.Options = {...options};
+
+
+    // TODO: Remove redeclaration of optionsUpdateState when uplot-wrappers-common is fixed
+    const optionsUpdateState = (_lhs: uPlot.Options, _rhs: uPlot.Options): string => {
+        const {width: lhsWidth, height: lhsHeight, ...lhs} = _lhs;
+        const {width: rhsWidth, height: rhsHeight, ...rhs} = _rhs;
+
+        let state: string = 'keep';
+        if (lhsHeight !== rhsHeight || lhsWidth !== rhsWidth) {
+            state = 'update';
+        }
+        if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+            return 'create';
+        }
+        for (const k of Object.keys(lhs)) {
+            if (!Object.is(lhs[k], rhs[k])) {
+                state = 'create';
+                break;
+            }
+        }
+        return state;
+    }
+
+
+    $: {
+        if (options) {
+            const state = optionsUpdateState(prevOptions, options);
+            prevOptions = {...options};
+            if (state === 'create') {
+                destroy();
+                create();
+            } else if (state === 'update' && chart) {
+                chart.setSize({
+                    width: options.width,
+                    height: options.height,
+                });
+            }
+        }
     }
 
     $: {
         if (!chart) {
             create();
-        } else if (!resetScales) {
+        } else if (resetScales) {
+            chart.setData(data, true);
+        } else {
             chart.setData(data, false);
             chart.redraw();
         }
