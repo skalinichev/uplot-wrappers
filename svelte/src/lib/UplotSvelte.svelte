@@ -1,8 +1,8 @@
 <script lang="ts">
     import 'uplot/dist/uPlot.min.css';
     import type uPlot from 'uplot';
-    import {onDestroy, onMount} from "svelte";
-    import {optionsUpdateState} from "uplot-wrappers-common";
+    import { onDestroy, onMount } from 'svelte';
+    import { optionsUpdateState } from 'uplot-wrappers-common';
 
     let uPlot: uPlot;
     export let options: uPlot.Options;
@@ -10,7 +10,7 @@
     export let target: HTMLDivElement | null = null;
     export let onDelete: (chart: uPlot) => void = () => {};
     export let onCreate: (chart: uPlot) => void = () => {};
-    export let resetScales:boolean = true;
+    export let resetScales = true;
 
     let chart: uPlot | null = null;
     let div: HTMLDivElement;
@@ -40,13 +40,12 @@
         destroy();
     });
 
-    let prevOptions: uPlot.Options = {...options};
-
+    let prevOptions: uPlot.Options = { ...options };
 
     $: {
         if (options) {
             const state = optionsUpdateState(prevOptions, options);
-            prevOptions = {...options};
+            prevOptions = { ...options };
             if (state === 'create') {
                 destroy();
                 create();
@@ -74,7 +73,6 @@
             chart.redraw();
         }
     }
-
 </script>
 
 {#if !target}
