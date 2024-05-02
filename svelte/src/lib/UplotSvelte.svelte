@@ -2,7 +2,7 @@
     import 'uplot/dist/uPlot.min.css';
     import type uPlot from 'uplot';
     import {onDestroy, onMount} from "svelte";
-    // import {optionsUpdateState} from "uplot-wrappers-common";
+    import {optionsUpdateState} from "uplot-wrappers-common";
 
     let uPlot: uPlot;
     export let options: uPlot.Options;
@@ -41,28 +41,6 @@
     });
 
     let prevOptions: uPlot.Options = {...options};
-
-
-    // TODO: Remove redeclaration of optionsUpdateState when uplot-wrappers-common is fixed
-    const optionsUpdateState = (_lhs: uPlot.Options, _rhs: uPlot.Options): string => {
-        const {width: lhsWidth, height: lhsHeight, ...lhs} = _lhs;
-        const {width: rhsWidth, height: rhsHeight, ...rhs} = _rhs;
-
-        let state: string = 'keep';
-        if (lhsHeight !== rhsHeight || lhsWidth !== rhsWidth) {
-            state = 'update';
-        }
-        if (Object.keys(lhs).length !== Object.keys(rhs).length) {
-            return 'create';
-        }
-        for (const k of Object.keys(lhs)) {
-            if (!Object.is(lhs[k], rhs[k])) {
-                state = 'create';
-                break;
-            }
-        }
-        return state;
-    }
 
 
     $: {

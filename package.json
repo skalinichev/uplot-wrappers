@@ -26,7 +26,8 @@
         "packages": [
             "common",
             "react",
-            "vue"
+            "vue",
+            "svelte"
         ],
         "nohoist": [
             "**/@types/**"
