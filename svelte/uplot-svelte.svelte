@@ -22,6 +22,10 @@
     };
 
     const create = () => {
+        if (!target && !div) {
+            requestAnimationFrame(() => create());
+            return;
+        }
         if (!chart) {
             chart = new uPlot(options, data, target || div);
             onCreate(chart);
