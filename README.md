@@ -151,12 +151,50 @@ Vue.js 3:
 
 `$ yarn run serveVue3`
 
+# Svelte
+
+## Installation
+Install uplot-svelte package with uplot dependency:
+- Using npm: `$ npm install uplot-svelte uplot`
+- Using yarn: `$ yarn add uplot-svelte uplot`
+
+You also need Svelte to be installed inside your project. Component is compatible with Svelte and SvelteKit projects.
+
+## How to use
+```sveltehtml
+<script lang="ts">
+    import UplotSvelte from 'uplot-svelte';
+
+    let data = [[1, 2, 3, 4, 5], [1, 3, 2, 5, 4]];
+
+    let options = {
+        width: 600,
+        height: 300,
+        scales: {x: {time: false}},
+        series: [{label: "x"}, {label: "y", stroke: "red"}],
+    };
+
+    function onCreate(chart) {
+        // do something with the chart on creation
+    }
+
+    function onDelete(chart) {
+        // do something when the chart gets destroyed
+    }
+</script>
+
+<UplotSvelte {options} {data} onCreate={onCreate} onDelete={onDelete} resetScales={true} />
+```
+
+Example of using the component in a SvelteKit project can be found in `svelte/src/routes/+page.svelte` folder of the repository.
+
+
 # Documentation
-| Parameter | Requirement | Description |
-|:-----:|:--:|:----------------------------|
-| options  |required|Options for uPlot. Passed as the first argument to uPlot constructor: `new uPlot(options)`|
-| data  |required|Data for uPlot. Passed as the second argument to uPlot constructor: `new uPlot(options, data)` |
-| target  |optional|Target html element or init function for uPlot. Passed as the third argument to uPlot constructor: `new uPlot(options, data, target)` A new div target element will be created automatically if none is passed in the props|
-| onCreate  |optional|Callback function, invoked upon uPlot instance creation or recreation|
-| onDelete  |optional|Callback function, invoked before uPlot instance gets destroyed, either because the props has changed so much it's impossible to update the chart or because the component is about to be unmounted|
-| resetScales  |optional|Flag controlling whether to reset the scales on data change. Defaults to true.
+|  Parameter  | Requirement | Description                                                                                                                                                                                                                 |
+|:-----------:|:-----------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|   options   |  required   | Options for uPlot. Passed as the first argument to uPlot constructor: `new uPlot(options)`                                                                                                                                  |
+|    data     |  required   | Data for uPlot. Passed as the second argument to uPlot constructor: `new uPlot(options, data)`                                                                                                                              |
+|   target    |  optional   | Target html element or init function for uPlot. Passed as the third argument to uPlot constructor: `new uPlot(options, data, target)` A new div target element will be created automatically if none is passed in the props |
+|  onCreate   |  optional   | Callback function, invoked upon uPlot instance creation or recreation                                                                                                                                                       |
+|  onDelete   |  optional   | Callback function, invoked before uPlot instance gets destroyed, either because the props has changed so much it's impossible to update the chart or because the component is about to be unmounted                         |
+| resetScales |  optional   | Flag controlling whether to reset the scales on data change. Defaults to true.                                                                                                                                              |

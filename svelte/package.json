@@ -1,0 +1,59 @@
+{
+	"name": "uplot-svelte",
+	"version": "1.1.5",
+	"description": "Svelte wrapper for uPlot that allows you to work with charts declaratively inside your favorite framework",
+	"author": "Kiril Panayotov <contact@zakrok.dev> (https://zakrok.dev)",
+	"contributors": [
+		{
+			"name": "Sergey Kalinichev",
+			"email": "kalinichev.so.0@gmail.com"
+		}
+	],
+	"license": "MIT",
+	"homepage": "https://github.com/skalinichev/uplot-wrappers#readme",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/skalinichev/uplot-wrappers.git"
+	},
+	"bugs": {
+		"url": "https://github.com/skalinichev/uplot-wrappers/issues"
+	},
+	"keywords": [
+		"Charts",
+		"uPlot",
+		"Svelte",
+		"SvelteKit",
+		"Wrapper"
+	],
+	"scripts": {
+		"build": "vite build && npm run package",
+		"package": "svelte-kit sync && svelte-package"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"dependencies": {},
+	"peerDependencies": {
+		"svelte": "^4.0.0",
+		"uplot": "^1.6.30"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/package": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"svelte": "^4.2.7",
+		"typescript": "^5.0.0",
+		"vite": "^5.0.11",
+		"uplot-wrappers-common": "1.1.5"
+	},
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module"
+}

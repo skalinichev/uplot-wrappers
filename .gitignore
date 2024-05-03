@@ -5,6 +5,16 @@ dist
 # local env files
 .env.local
 .env.*.local
+!.env.example
+
+# Build files
+build
+.svelte-kit
+package
+
+# Vite configs
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 
 # Log files
 npm-debug.log*
