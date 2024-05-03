@@ -1,10 +1,8 @@
 <script lang="ts">
-    import 'uplot/dist/uPlot.min.css';
-    import type uPlot from 'uplot';
+    import uPlot from 'uplot';
     import { onDestroy, onMount } from 'svelte';
     import { optionsUpdateState } from 'uplot-wrappers-common';
 
-    let uPlot: uPlot;
     export let options: uPlot.Options;
     export let data: uPlot.AlignedData;
     export let target: HTMLDivElement | null = null;
@@ -17,22 +15,20 @@
 
     const destroy = () => {
         if (chart) {
-            chart.destroy();
             onDelete(chart);
+            chart.destroy();
             chart = null;
         }
     };
 
     const create = () => {
-        if (uPlot && !chart) {
+        if (!chart) {
             chart = new uPlot(options, data, target || div);
             onCreate(chart);
         }
     };
 
     onMount(async () => {
-        const uplotModule = await import('uplot');
-        uPlot = uplotModule.default;
         create();
     });
 

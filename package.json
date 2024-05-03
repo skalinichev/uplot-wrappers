@@ -35,13 +35,15 @@
     },
     "private": true,
     "scripts": {
-        "build": "concurrently 'npm run buildReact' 'npm run buildVue'",
+        "build": "concurrently 'npm run buildReact' 'npm run buildVue' 'npm run buildSvelte'",
         "buildVue": "webpack --env=framework=vue",
         "buildReact": "webpack --env=framework=react",
-        "buildProd": "concurrently 'npm run buildVue -- --env=mode=production' 'npm run buildReact -- --env=mode=production'",
+        "buildSvelte": "webpack --env=framework=svelte",
+        "buildProd": "concurrently 'npm run buildVue -- --env=mode=production' 'npm run buildReact -- --env=mode=production' 'npm run buildSvelte -- --env=mode=production'",
         "serveVue": "webpack serve  --env=framework=vue --env=example=true",
         "serveVue3": "webpack serve  --env=framework=vue --env=frameworkVersion=3 --env=example=true",
-        "serveReact": "webpack serve --env=framework=react --env=example=true"
+        "serveReact": "webpack serve --env=framework=react --env=example=true",
+        "serveSvelte": "webpack serve --env=framework=svelte --env=example=true"
     },
     "dependencies": {},
     "devDependencies": {

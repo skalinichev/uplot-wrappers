@@ -5,17 +5,19 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const sveltePreprocess = require('svelte-preprocess');
 
 module.exports = (env) => {
     const { framework, example, frameworkVersion = '' } = env;
     const vue3 = frameworkVersion == '3';
+    const svelte = framework === 'svelte';
     const entry = {
         [`uplot-${framework}`]: `./${framework}/uplot-${framework}`,
     };
     if (example) {
         entry[`uplot-${framework}-example`] = `./${framework}/uplot-${framework}${frameworkVersion}-example`;
     }
-    const targets = example ? 'last 1 chrome version' : ['ie 11', 'last 1 chrome version'];
+    const targets = example || svelte ? 'last 1 chrome version' : ['ie 11', 'last 1 chrome version'];
     return {
         mode: env.mode ? env.mode : 'development',
         devtool: 'source-map',
@@ -73,13 +75,46 @@ module.exports = (env) => {
                     use: [
                         {
                             loader: 'babel-loader',
-                            options: { presets: [['@babel/preset-env']] },
+                            options: {
+                                presets: [['@babel/preset-env', svelte ? { exclude: ['transform-regenerator'] } : {}]],
+                                plugins: ['@babel/plugin-proposal-class-properties'],
+                            },
                         },
                     ],
                 },
                 {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader'],
+                },
+
+                {
+                    test: /\.svelte$/,
+                    use: {
+                        loader: 'svelte-loader',
+                        options: {
+                            preprocess: sveltePreprocess({
+                                babel: {
+                                    presets: [
+                                        [
+                                            '@babel/preset-env',
+                                            {
+                                                loose: true,
+                                                modules: false,
+                                                targets,
+                                            },
+                                        ],
+                                    ],
+                                },
+                            }),
+                        },
+                    },
+                },
+                {
+                    // required to prevent errors from Svelte on Webpack 5+
+                    test: /node_modules\/svelte\/.*\.mjs$/,
+                    resolve: {
+                        fullySpecified: false,
+                    },
                 },
             ],
         },
@@ -96,10 +131,12 @@ module.exports = (env) => {
             new HtmlWebpackPlugin({ scriptLoading: 'defer', template: `${framework}/uplot-${framework}-example.html` }),
         ],
         resolve: {
-            extensions: ['.ts', '.tsx', '.js'],
+            extensions: ['.ts', '.tsx', '.js', '.svelte'],
             alias: {
                 vue: vue3 ? 'vue3/dist/vue.esm-bundler.js' : 'vue/dist/vue.js',
+                svelte: path.resolve('node_modules', 'svelte/src/runtime'),
             },
+            conditionNames: ['svelte', 'browser', 'import'],
         },
         devServer: {
             static: {
@@ -111,6 +148,7 @@ module.exports = (env) => {
             open: true,
             port: 8080,
         },
+        /* TODO: svelte externals */
         externals: example
             ? {}
             : {

@@ -1,15 +1,26 @@
 {
-	"extends": "./.svelte-kit/tsconfig.json",
-	"compilerOptions": {
-		"allowJs": true,
-		"checkJs": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"sourceMap": true,
-		"strict": true,
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext"
-	}
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "./dist/",
+        "module": "es2015",
+        "target": "es6",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "downlevelIteration": true,
+        "moduleResolution": "node",
+        "rootDir": ".",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "skipLibCheck": true,
+        "paths": {
+            "uplot-wrappers-common": ["common"]
+        },
+        "lib": ["es2015", "dom"]
+    }
 }
