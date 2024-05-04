@@ -1,6 +1,6 @@
 {
     "name": "uplot-wrappers-common",
-    "version": "1.1.5",
+    "version": "1.2.1",
     "description": "Common code for React and Vue.js wrappers of uPlot",
     "author": "Sergey Kalinichev <kalinichev.so.0@gmail.com>",
     "license": "MIT",
