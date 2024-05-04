@@ -2,11 +2,15 @@
 	"name": "uplot-svelte",
 	"version": "1.2.1",
 	"description": "Svelte wrapper for uPlot that allows you to work with charts declaratively inside your favorite framework",
-	"author": "Kiril Panayotov <contact@zakrok.dev> (https://zakrok.dev)",
+	"author": "Kiril Panayotov <contact@zakrok.dev>",
 	"contributors": [
 		{
 			"name": "Sergey Kalinichev",
 			"email": "kalinichev.so.0@gmail.com"
+		},
+		{
+			"name": "Kiril Panayotov",
+			"email": "contact@zakrok.dev"
 		}
 	],
 	"license": "MIT",
