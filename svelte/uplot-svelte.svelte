@@ -1,17 +1,36 @@
-<script lang="ts">
+<script>
     import uPlot from 'uplot';
     import { onDestroy, onMount } from 'svelte';
-    import { optionsUpdateState } from 'uplot-wrappers-common';
 
-    export let options: uPlot.Options;
-    export let data: uPlot.AlignedData;
-    export let target: HTMLDivElement | null = null;
-    export let onDelete: (chart: uPlot) => void = () => {};
-    export let onCreate: (chart: uPlot) => void = () => {};
+    export let options;
+    export let data;
+    export let target = null;
+    export let onDelete;
+    export let onCreate;
     export let resetScales = true;
 
-    let chart: uPlot | null = null;
-    let div: HTMLDivElement;
+    let chart = null;
+    let div = null;
+
+    const optionsUpdateState = (_lhs, _rhs) => {
+        const { width: lhsWidth, height: lhsHeight, ...lhs } = _lhs;
+        const { width: rhsWidth, height: rhsHeight, ...rhs } = _rhs;
+
+        let state = 'keep';
+        if (lhsHeight !== rhsHeight || lhsWidth !== rhsWidth) {
+            state = 'update';
+        }
+        if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+            return 'create';
+        }
+        for (const k of Object.keys(lhs)) {
+            if (!Object.is(lhs[k], rhs[k])) {
+                state = 'create';
+                break;
+            }
+        }
+        return state;
+    };
 
     const destroy = () => {
         if (chart) {
@@ -23,7 +42,7 @@
 
     const create = () => {
         if (!target && !div) {
-            requestAnimationFrame(() => create());
+            typeof requestAnimationFrame !== 'undefined' && requestAnimationFrame(() => create());
             return;
         }
         if (!chart) {
@@ -40,7 +59,7 @@
         destroy();
     });
 
-    let prevOptions: uPlot.Options = { ...options };
+    let prevOptions = { ...options };
 
     $: {
         if (options) {

@@ -18,6 +18,16 @@ module.exports = (env) => {
         entry[`uplot-${framework}-example`] = `./${framework}/uplot-${framework}${frameworkVersion}-example`;
     }
     const targets = example || svelte ? 'last 1 chrome version' : ['ie 11', 'last 1 chrome version'];
+    const webpackPluginConfig = example
+        ? [new HtmlWebpackPlugin({ scriptLoading: 'defer', template: `${framework}/uplot-${framework}-example.html` })]
+        : [];
+    const svelteFilesToCopy = svelte
+        ? [
+              { from: `${framework}/uplot-svelte.svelte`, force: true },
+              { from: `${framework}/index.js`, force: true },
+          ]
+        : [];
+
     return {
         mode: env.mode ? env.mode : 'development',
         devtool: 'source-map',
@@ -109,26 +119,20 @@ module.exports = (env) => {
                         },
                     },
                 },
-                {
-                    // required to prevent errors from Svelte on Webpack 5+
-                    test: /node_modules\/svelte\/.*\.mjs$/,
-                    resolve: {
-                        fullySpecified: false,
-                    },
-                },
             ],
         },
         plugins: [
             new ESLintPlugin({ extensions: ['ts', 'tsx'] }),
             new CopyPlugin({
                 patterns: [
-                    { from: `${framework}/types/**`, force: true },
+                    { from: `${framework}/types/index.d.ts`, force: true },
                     { from: `${framework}/package.json`, force: true },
                     { from: 'README.md', force: true },
                     { from: 'LICENSE', force: true },
+                    ...svelteFilesToCopy,
                 ],
             }),
-            new HtmlWebpackPlugin({ scriptLoading: 'defer', template: `${framework}/uplot-${framework}-example.html` }),
+            ...webpackPluginConfig,
         ],
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.svelte'],
@@ -148,7 +152,6 @@ module.exports = (env) => {
             open: true,
             port: 8080,
         },
-        /* TODO: svelte externals */
         externals: example
             ? {}
             : {
