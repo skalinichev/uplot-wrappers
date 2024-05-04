@@ -39,6 +39,6 @@ export const dataMatch = (lhs: uPlot.AlignedData, rhs: uPlot.AlignedData): boole
         if (lhsOneSeries.length !== rhsOneSeries.length) {
             return false;
         }
-        return lhsOneSeries.every((value, valueIdx) => value === rhsOneSeries[valueIdx]);
+        return lhsOneSeries.every((value: number, valueIdx: number) => value === rhsOneSeries[valueIdx]);
     });
 }

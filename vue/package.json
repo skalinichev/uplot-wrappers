@@ -29,10 +29,10 @@
     "main": "uplot-vue.js",
     "dependencies": {},
     "peerDependencies": {
-        "uplot": "^1.6.7"
+        "uplot": "^1.6.20"
     },
     "devDependencies": {
-        "uplot": "^1.6.7",
+        "uplot": "^1.6.20",
         "uplot-wrappers-common": "1.1.5",
         "vue": "^2.6.12",
         "vue3": "npm:vue@^3.0.11"

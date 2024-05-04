@@ -66,6 +66,7 @@ const App = Vue.extend<
             console.log('Deleted from template');
         }
     },
+    // eslint-disable-next-line
     render(h: CreateElement): VNode {
         // @ts-ignore
         return (<div ref='root'>
