@@ -8,6 +8,8 @@
     export let onDelete;
     export let onCreate;
     export let resetScales = true;
+    let className;
+    export { className as class };
 
     let chart = null;
     let div = null;
@@ -95,5 +97,5 @@
 </script>
 
 {#if !target}
-    <div bind:this={div}></div>
+    <div bind:this={div} class={className}></div>
 {/if}

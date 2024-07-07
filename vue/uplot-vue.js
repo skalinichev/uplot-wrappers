@@ -21,6 +21,10 @@ export default (defineComponent ? defineComponent : (v) => v)({
             required: false,
             default: true,
         },
+        class: {
+            type: String,
+            required: false,
+        },
     },
     data() {
         // eslint-disable-next-line
@@ -80,6 +84,7 @@ export default (defineComponent ? defineComponent : (v) => v)({
             ? null
             : (createVNode ? createVNode : h)('div', {
                   ref: 'targetRef',
+                  class: this.$props.class,
               });
     },
 });

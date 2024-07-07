@@ -8,11 +8,13 @@ export default function ({
     onDelete,
     onCreate,
     resetScales,
+    className
 }: {
     options: uPlot.Options;
     data: uPlot.AlignedData;
-    target?: HTMLElement | ((self: uPlot, init: Function) => void);
+    target?: HTMLElement;
     onDelete?: (chart: uPlot) => void;
     onCreate?: (chart: uPlot) => void;
     resetScales?: boolean;
+    className?: string;
 }): JSX.Element | null;

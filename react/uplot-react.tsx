@@ -11,6 +11,7 @@ export default function UplotReact({
     onDelete,
     onCreate,
     resetScales = true,
+    className
 }: {
     options: uPlot.Options;
     data: uPlot.AlignedData;
@@ -19,6 +20,7 @@ export default function UplotReact({
     onDelete?: (chart: uPlot) => void;
     onCreate?: (chart: uPlot) => void;
     resetScales?: boolean;
+    className?: string;
 }): JSX.Element | null {
     const chartRef = useRef<uPlot | null>(null);
     const targetRef = useRef<HTMLDivElement>(null);
@@ -99,5 +101,5 @@ export default function UplotReact({
         return () => destroy(chartRef.current);
     }, [target, create, destroy]);
 
-    return target ? null : <div ref={targetRef}></div>;
+    return target ? null : <div ref={targetRef} className={className}></div>;
 }
