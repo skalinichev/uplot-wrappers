@@ -9,7 +9,7 @@ declare const __propDef: {
         onDelete?: ((chart: uPlot) => void) | undefined;
         onCreate?: ((chart: uPlot) => void) | undefined;
         resetScales?: boolean | undefined;
-        class:? string;
+        class?: string;
     };
     events: {
         [evt: string]: CustomEvent<any>;

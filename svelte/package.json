@@ -1,6 +1,6 @@
 {
 	"name": "uplot-svelte",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"description": "Svelte wrapper for uPlot that allows you to work with charts declaratively inside your favorite framework",
 	"author": "Kiril Panayotov <contact@zakrok.dev>",
 	"contributors": [
