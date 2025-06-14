@@ -30,14 +30,14 @@
     "dependencies": {},
     "peerDependencies": {
         "react": ">=16.8.6",
-        "uplot": "^1.6.20"
+        "uplot": "^1.6.32"
     },
     "devDependencies": {
         "@types/react": "^16.8.25",
         "@types/react-dom": "^16.8.5",
         "react": ">=16.8.6",
         "react-dom": ">=16.8.6",
-        "uplot": "^1.6.20",
+        "uplot": "^1.6.32",
         "uplot-wrappers-common": "1.2.3"
     }
 }

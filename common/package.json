@@ -23,6 +23,6 @@
     "private": true,
     "dependencies": {},
     "devDependencies": {
-        "uplot": "^1.6.20"
+        "uplot": "^1.6.32"
     }
 }

@@ -50,13 +50,13 @@
 	"dependencies": {},
 	"peerDependencies": {
 		"svelte": "^4.0.0",
-		"uplot": "^1.6.20"
+		"uplot": "^1.6.32"
 	},
 	"devDependencies": {
 		"svelte": "^4.2.7",
 		"svelte-loader": "^3.2.0",
 		"svelte-preprocess": "^5.1.4",
-		"uplot": "^1.6.20"
+		"uplot": "^1.6.32"
 	},
 	"type": "module"
 }
