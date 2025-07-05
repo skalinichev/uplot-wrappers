@@ -1,6 +1,6 @@
 {
     "name": "uplot-wrappers",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "React and Vue.js wrappers for uPlot",
     "author": "Sergey Kalinichev <kalinichev.so.0@gmail.com>",
     "license": "MIT",
